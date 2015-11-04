@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+.DS_Store
+env/
+
+*/migrations/
+*/**/migrations/
+*.db
+*/node_modules/
+*/bower_components/

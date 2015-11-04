@@ -1,0 +1,9 @@
+{
+  "name": "PettyCash",
+  "version": "0.0.1",
+  "description": "PettyCash",
+  "author": "Allen Joseph",
+  "dependencies": {
+    "startbootstrap-sb-admin-2": "~1.0.7"
+  }
+}
