@@ -24,4 +24,5 @@ class TicketAdmin(admin.ModelAdmin):
         'amount',
         'number',
         'legalPerson',
+        'administrator',
     )

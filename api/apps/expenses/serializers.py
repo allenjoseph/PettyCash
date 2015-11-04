@@ -26,4 +26,5 @@ class TicketSerializer(serializers.HyperlinkedModelSerializer):
             'amount',
             'number',
             'legalPerson',
+            'administrator',
         )

@@ -1,5 +1,19 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
 
+
+class Administrator(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    dni = models.IntegerField(blank=True, null=True)
+    password = models.CharField(max_length=50)
+    email = models.EmailField(max_length=100)
+    
+    #Overriding
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(Administrator, self).save(*args, **kwargs)
+        
 
 class LegalPerson(models.Model):
     id = models.AutoField(primary_key=True)
@@ -18,3 +32,4 @@ class Ticket(models.Model):
     amount = models.FloatField()
     number = models.CharField(max_length=100)
     legalPerson = models.ForeignKey(LegalPerson)
+    administrator = models.ForeignKey(Administrator)
