@@ -67,17 +67,21 @@ exports["default"] = _react2["default"].createClass({
     render: function render() {
         return _react2["default"].createElement(
             "div",
-            { id: "page-wrapper" },
+            { className: "container" },
             _react2["default"].createElement(
                 "div",
-                { className: "row" },
+                { className: "page-header" },
                 _react2["default"].createElement(
                     "div",
-                    { className: "col-lg-12" },
+                    { className: "row" },
                     _react2["default"].createElement(
-                        "h1",
-                        { className: "page-header" },
-                        "Gastos"
+                        "div",
+                        { className: "col-lg-12" },
+                        _react2["default"].createElement(
+                            "h1",
+                            { className: "page-header" },
+                            "Gastos"
+                        )
                     )
                 )
             )
@@ -141,67 +145,38 @@ exports["default"] = _react2["default"].createClass({
     render: function render() {
         return _react2["default"].createElement(
             "nav",
-            { className: "navbar navbar-default navbar-static-top", role: "navigation", style: { marginBottom: 0 } },
+            { className: "navbar navbar-default navbar-fixed-top", role: "navigation", style: { marginBottom: 0 } },
             _react2["default"].createElement(
                 "div",
-                { className: "navbar-header" },
-                _react2["default"].createElement(
-                    "button",
-                    { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": ".navbar-collapse" },
-                    _react2["default"].createElement(
-                        "span",
-                        { className: "sr-only" },
-                        "Toggle navigation"
-                    ),
-                    _react2["default"].createElement("span", { className: "icon-bar" }),
-                    _react2["default"].createElement("span", { className: "icon-bar" }),
-                    _react2["default"].createElement("span", { className: "icon-bar" })
-                ),
-                _react2["default"].createElement(
-                    "a",
-                    { className: "navbar-brand", href: "index.html" },
-                    _react2["default"].createElement("i", { className: "fa fa-book fa-fw" }),
-                    " Petty Cash"
-                )
-            ),
-            _react2["default"].createElement(
-                "ul",
-                { className: "nav navbar-top-links navbar-right" },
-                _react2["default"].createElement(
-                    "li",
-                    { className: "dropdown" },
-                    _react2["default"].createElement(
-                        "a",
-                        { className: "dropdown-toggle", "data-toggle": "dropdown", href: "#" },
-                        _react2["default"].createElement("i", { className: "fa fa-user fa-fw" }),
-                        " Daniela ",
-                        _react2["default"].createElement("i", { className: "fa fa-caret-down" })
-                    ),
-                    _react2["default"].createElement(
-                        "ul",
-                        { className: "dropdown-menu dropdown-user" },
-                        _react2["default"].createElement(
-                            "li",
-                            null,
-                            _react2["default"].createElement(
-                                "a",
-                                { href: "javascript:void(0)" },
-                                _react2["default"].createElement("i", { className: "fa fa-sign-out fa-fw" }),
-                                " Logout"
-                            )
-                        )
-                    )
-                )
-            ),
-            _react2["default"].createElement(
-                "div",
-                { className: "navbar-default sidebar", role: "navigation" },
+                { className: "container" },
                 _react2["default"].createElement(
                     "div",
-                    { className: "sidebar-nav navbar-collapse" },
+                    { className: "navbar-header" },
+                    _react2["default"].createElement(
+                        "button",
+                        { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": ".navbar-collapse" },
+                        _react2["default"].createElement(
+                            "span",
+                            { className: "sr-only" },
+                            "Toggle navigation"
+                        ),
+                        _react2["default"].createElement("span", { className: "icon-bar" }),
+                        _react2["default"].createElement("span", { className: "icon-bar" }),
+                        _react2["default"].createElement("span", { className: "icon-bar" })
+                    ),
+                    _react2["default"].createElement(
+                        "a",
+                        { className: "navbar-brand", href: "index.html" },
+                        _react2["default"].createElement("i", { className: "fa fa-book fa-fw" }),
+                        " Petty Cash"
+                    )
+                ),
+                _react2["default"].createElement(
+                    "div",
+                    { className: "navbar-collapse collapse" },
                     _react2["default"].createElement(
                         "ul",
-                        { className: "nav", id: "side-menu" },
+                        { className: "nav navbar-nav" },
                         _react2["default"].createElement(
                             "li",
                             null,
@@ -230,6 +205,35 @@ exports["default"] = _react2["default"].createClass({
                                 { href: "javascript:void(0)" },
                                 _react2["default"].createElement("i", { className: "fa fa-child fa-fw" }),
                                 " Consulta RUC"
+                            )
+                        )
+                    ),
+                    _react2["default"].createElement(
+                        "ul",
+                        { className: "nav navbar-nav navbar-right" },
+                        _react2["default"].createElement(
+                            "li",
+                            { className: "dropdown" },
+                            _react2["default"].createElement(
+                                "a",
+                                { className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", "aria-expanded": "false" },
+                                _react2["default"].createElement("i", { className: "fa fa-user fa-fw" }),
+                                " Daniela ",
+                                _react2["default"].createElement("span", { className: "caret" })
+                            ),
+                            _react2["default"].createElement(
+                                "ul",
+                                { className: "dropdown-menu" },
+                                _react2["default"].createElement(
+                                    "li",
+                                    null,
+                                    _react2["default"].createElement(
+                                        "a",
+                                        { href: "javascript:void(0)" },
+                                        _react2["default"].createElement("i", { className: "fa fa-sign-out fa-fw" }),
+                                        " Logout"
+                                    )
+                                )
                             )
                         )
                     )

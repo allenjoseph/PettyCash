@@ -4,6 +4,6 @@
   "description": "PettyCash",
   "author": "Allen Joseph",
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.7"
+    "bootswatch": "~3.3.5+4"
   }
 }
