@@ -8,12 +8,14 @@ class Administrator(models.Model):
     dni = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
-    
-    #Overriding
+
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
         super(Administrator, self).save(*args, **kwargs)
-        
+
+    def __str__(self):
+        return self.name
+
 
 class LegalPerson(models.Model):
     id = models.AutoField(primary_key=True)

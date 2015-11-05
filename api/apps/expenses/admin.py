@@ -1,5 +1,16 @@
 from django.contrib import admin
-from models import LegalPerson, Ticket
+from models import Administrator, LegalPerson, Ticket
+
+
+@admin.register(Administrator)
+class AdministratorAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+        'dni',
+        'password',
+        'email',
+    )
 
 
 @admin.register(LegalPerson)
