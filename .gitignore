@@ -3,6 +3,7 @@ __pycache__/
 
 .DS_Store
 env/
+frontend-electron/app/dist/
 
 */migrations/
 */**/migrations/
