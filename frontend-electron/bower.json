@@ -4,6 +4,7 @@
   "description": "PettyCash",
   "author": "Allen Joseph",
   "dependencies": {
-    "bootswatch": "~3.3.5+4"
+    "bootswatch": "~3.3.5",
+    "datatables": "~1.10.9"
   }
 }

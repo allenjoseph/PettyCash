@@ -22,13 +22,15 @@ export default React.createClass({
 
                     <div className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
-                            <li>
-                                <a href="javascript:void(0)" className={this.state.expenses ? 'active' : ''}>
+                            <li className={this.state.expenses ? 'active' : ''}>
+                                <a href="javascript:void(0)">
                                     <i className="fa fa-usd fa-fw"></i> Gastos
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><i className="fa fa-bar-chart-o fa-fw"></i> Estadisticas</a>
+                                <a href="javascript:void(0)">
+                                    <i className="fa fa-bar-chart-o fa-fw"></i> Estadisticas
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)"><i className="fa fa-child fa-fw"></i> Consulta RUC</a>
