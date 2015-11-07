@@ -23,6 +23,7 @@ class LegalPerson(models.Model):
     dni = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=100)
     tags = models.CharField(max_length=100)
+    administrator = models.ForeignKey(Administrator)
 
     def __str__(self):
         return self.name
@@ -38,3 +39,6 @@ class Ticket(models.Model):
     number = models.CharField(max_length=100)
     legalPerson = models.ForeignKey(LegalPerson)
     administrator = models.ForeignKey(Administrator)
+
+    def __str__(self):
+        return self.description

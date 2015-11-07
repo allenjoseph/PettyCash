@@ -1,20 +1,8 @@
-from models import Administrator, LegalPerson, Ticket
+from models import LegalPerson, Ticket
 from rest_framework import serializers
 
 
-class AdministratorSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Administrator
-        fields = (
-            'id',
-            'name',
-            'dni',
-            'password',
-            'email',
-        )
-
-
-class LegalPersonSerializer(serializers.HyperlinkedModelSerializer):
+class LegalPersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = LegalPerson
         fields = (
@@ -23,10 +11,11 @@ class LegalPersonSerializer(serializers.HyperlinkedModelSerializer):
             'dni',
             'name',
             'tags',
+            'administrator',
         )
 
 
-class TicketSerializer(serializers.HyperlinkedModelSerializer):
+class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = (

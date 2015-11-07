@@ -21,6 +21,7 @@ class LegalPersonAdmin(admin.ModelAdmin):
         'dni',
         'name',
         'tags',
+        'administrator',
     )
 
 

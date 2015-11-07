@@ -18,12 +18,12 @@ from django.contrib import admin
 from rest_framework import routers
 from apps.expenses import views
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 router.register(r'legalpersons', views.LegalPersonViewSet)
 router.register(r'tickets', views.TicketViewSet)
-router.register(r'administrators', views.AdministratorViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^', include(router.urls)),
 ]

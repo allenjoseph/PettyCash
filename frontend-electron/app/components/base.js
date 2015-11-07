@@ -3,28 +3,53 @@ import ReactDOM from 'react-dom';
 import Login from './login';
 import Nav from './nav';
 import Content from './content';
+import $ from 'jquery';
+import Constants from './commons/constants';
+import update from 'react-addons-update';
 
 let Wrapper = React.createClass({
+
     getInitialState() {
         return {
-            valid: false
+            validAuth: false,
+            badCredentials: false,
+            token: ''
         };
     },
-    logIn(){
-        this.setState({
-            valid: true
-        });
+
+    logIn(credentials){
+        $.post(Constants.api.auth, credentials)
+        
+        .done(function(auth){
+
+            let newState = update(this.state, {
+                validAuth: {$set: true},
+                token: {$set: auth.token}
+            });
+            this.setState(newState);
+
+        }.bind(this))
+        
+        .fail(function(e){
+
+            let newState = update(this.state, {
+                badCredentials: {$set: true}
+            });
+            this.setState(newState);
+        
+        }.bind(this));
     },
+
     render(){
-        if(this.state.valid)
+        if(this.state.validAuth)
             return (
                 <div>
-                    <Nav/>
-                    <Content/>
+                    <Nav token={this.state.token}/>
+                    <Content token={this.state.token}/>
                 </div>
             );
         else
-            return <Login logIn={this.logIn}/>;
+            return <Login logIn={this.logIn} badCredentials={this.state.badCredentials}/>;
     }
 });
 

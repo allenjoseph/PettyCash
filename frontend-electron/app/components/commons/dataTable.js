@@ -13,14 +13,29 @@ export default React.createClass({
         };
     },
     
-    loadData(url){
-        $.getJSON(url, function(data) {
+    loadData(){
+
+        $.ajax({
+            type: 'GET',
+            url: this.props.url,
+            
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'JWT ' + this.props.token);
+            }.bind(this),
+
+        })
+        
+        .done(function(data){
             this.setState({ rows: data });
+        }.bind(this))
+
+        .fail(function(){
+
         }.bind(this));
     },
     
     componentDidMount() {
-        this.loadData(this.props.url);
+        this.loadData();
     },
     
     componentDidUpdate: function() {
