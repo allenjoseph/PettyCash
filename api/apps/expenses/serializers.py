@@ -7,11 +7,10 @@ class LegalPersonSerializer(serializers.ModelSerializer):
         model = LegalPerson
         fields = (
             'id',
+            'name',
             'ruc',
             'dni',
-            'name',
             'tags',
-            'administrator',
         )
 
 
@@ -20,12 +19,10 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = (
             'id',
-            'description',
-            'date',
-            'totalPrice',
-            'unitPrice',
-            'amount',
             'number',
-            'legalPerson',
-            'administrator',
+            'description',
+            'legal_person',
+            'total_price',
+            'created_by',
+            'created_date',
         )

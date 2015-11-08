@@ -1,29 +1,17 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
-
-
-class Administrator(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    dni = models.IntegerField(blank=True, null=True)
-    password = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100)
-
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        super(Administrator, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
+from audit_log.models.fields import CreatingUserField
+from audit_log.models.fields import LastUserField
 
 
 class LegalPerson(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     ruc = models.IntegerField(blank=True, null=True)
     dni = models.IntegerField(blank=True, null=True)
-    name = models.CharField(max_length=100)
-    tags = models.CharField(max_length=100)
-    administrator = models.ForeignKey(Administrator)
+    tags = models.CharField(max_length=100, blank=True)
+    created_by = CreatingUserField(related_name="legal_person_created")
+    modified_by = LastUserField(related_name="legal_person_modified")
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -31,14 +19,14 @@ class LegalPerson(models.Model):
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=300)
-    date = models.DateTimeField(auto_now_add=True)
-    totalPrice = models.FloatField()
-    unitPrice = models.FloatField()
-    amount = models.FloatField()
     number = models.CharField(max_length=100)
-    legalPerson = models.ForeignKey(LegalPerson)
-    administrator = models.ForeignKey(Administrator)
+    description = models.CharField(max_length=300)
+    legal_person = models.ForeignKey(LegalPerson)
+    total_price = models.FloatField()
+    created_by = CreatingUserField(related_name="ticket_created")
+    modified_by = LastUserField(related_name="ticket_modified")
+    created_date = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.description

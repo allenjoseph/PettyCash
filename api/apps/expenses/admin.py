@@ -1,27 +1,18 @@
 from django.contrib import admin
-from models import Administrator, LegalPerson, Ticket
-
-
-@admin.register(Administrator)
-class AdministratorAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'name',
-        'dni',
-        'password',
-        'email',
-    )
+from models import LegalPerson, Ticket
 
 
 @admin.register(LegalPerson)
 class LegalPersonAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'name',
         'ruc',
         'dni',
-        'name',
         'tags',
-        'administrator',
+        'created_by',
+        'modified_by',
+        'last_modified',
     )
 
 
@@ -29,12 +20,12 @@ class LegalPersonAdmin(admin.ModelAdmin):
 class TicketAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'description',
-        'date',
-        'totalPrice',
-        'unitPrice',
-        'amount',
         'number',
-        'legalPerson',
-        'administrator',
+        'description',
+        'legal_person',
+        'total_price',
+        'created_by',
+        'modified_by',
+        'created_date',
+        'last_modified',
     )

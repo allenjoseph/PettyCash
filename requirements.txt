@@ -1,2 +1,5 @@
 Django==1.8.5
+django-audit-log==0.7.0
 djangorestframework==3.3.0
+djangorestframework-jwt==1.7.2
+PyJWT==1.4.0
