@@ -50,8 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'audit_log.middleware.JWTAuthMiddleware',
-    'audit_log.middleware.UserLoggingMiddleware',
+    'PettyCash.middleware.WhodidMiddleware',
 )
 
 ROOT_URLCONF = 'PettyCash.urls'
@@ -111,8 +110,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }

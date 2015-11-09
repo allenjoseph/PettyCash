@@ -17,7 +17,7 @@ export default React.createClass({
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="index.html"><i className="fa fa-book fa-fw"></i> Petty Cash</a>
+                        <a className="navbar-brand" href="javascript:void(0)"><i className="fa fa-book fa-fw"></i> Petty Cash</a>
                     </div>
 
                     <div className="navbar-collapse collapse">
@@ -39,7 +39,7 @@ export default React.createClass({
 
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
                                     <i className="fa fa-user fa-fw"></i> Daniela <span className="caret"></span>
                                 </a>
                                 <ul className="dropdown-menu">
