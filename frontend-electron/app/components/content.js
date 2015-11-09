@@ -38,7 +38,7 @@ export default React.createClass({
         if(this.state.showAddForm){
             addForm = <div className="row" key="addForm">
                         <div className="col-lg-12">
-                            <ExpenseAddForm close={this.closeAddForm}/>
+                            <ExpenseAddForm close={this.closeAddForm} token={this.props.token}/>
                             <hr/>
                         </div>
                     </div>;

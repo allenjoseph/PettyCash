@@ -1,7 +1,9 @@
 export default {
     api: {
         auth: 'http://localhost:8000/api-token-auth/',
-        tickets: 'http://127.0.0.1:8000/tickets/?format=json'
+        tickets: 'http://127.0.0.1:8000/tickets/?format=json',
+        legalPersons: 'http://127.0.0.1:8000/legalpersons/?format=json',
+        legalPerson: 'http://127.0.0.1:8000/legalpersons/',
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',

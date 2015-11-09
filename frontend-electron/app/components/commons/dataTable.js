@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Constants from './constants';
 import $ from 'jquery';
+import Dispatcher from '../dispatchers/dispatcher';
 
 require('datatables-bootstrap3-plugin');
 
@@ -15,15 +16,7 @@ export default React.createClass({
     
     loadData(){
 
-        $.ajax({
-            type: 'GET',
-            url: this.props.url,
-            
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('Authorization', 'JWT ' + this.props.token);
-            }.bind(this),
-
-        })
+        Dispatcher.getData(this.props.url, this.props.token)
         
         .done(function(data){
             this.setState({ rows: data });

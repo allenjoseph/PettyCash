@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import Login from './login';
 import Nav from './nav';
 import Content from './content';
-import $ from 'jquery';
-import Constants from './commons/constants';
 import update from 'react-addons-update';
+import Dispatcher from './dispatchers/dispatcher';
 
 let Wrapper = React.createClass({
 
@@ -18,9 +17,9 @@ let Wrapper = React.createClass({
     },
 
     logIn(credentials){
-        $.post(Constants.api.auth, credentials)
+        Dispatcher.login(credentials)
         
-        .done(function(auth){
+        .then((auth)=>{
 
             let newState = update(this.state, {
                 validAuth: {$set: true},
@@ -28,9 +27,7 @@ let Wrapper = React.createClass({
             });
             this.setState(newState);
 
-        }.bind(this))
-        
-        .fail(function(e){
+        }.bind(this), (e)=>{
 
             let newState = update(this.state, {
                 badCredentials: {$set: true}
