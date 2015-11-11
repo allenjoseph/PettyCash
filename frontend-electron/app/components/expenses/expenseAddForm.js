@@ -49,6 +49,13 @@ export default React.createClass({
         }));
     },
 
+    addLegalPerson(legalPerson){
+        this.setState(update(this.state, {
+            legalPersons: {$push: [legalPerson]},
+            showLegalPerson: {$set: false}
+        }));
+    },
+
     save(){
         debugger;
     },
@@ -63,7 +70,7 @@ export default React.createClass({
 
             legalPersonForm = <div className="form-group">
                                     <div className="col-sm-12">
-                                        <LegalPersonAddForm token={this.props.token}/>
+                                        <LegalPersonAddForm token={this.props.token} addLegalPerson={this.addLegalPerson}/>
                                         <hr/>
                                     </div>
                                 </div>;

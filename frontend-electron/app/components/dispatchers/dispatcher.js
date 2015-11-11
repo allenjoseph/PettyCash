@@ -13,28 +13,37 @@ export default {
             });
         });
     },
-    addLegalPerson(legalPerson, token){
-        return $.ajax({
-            type: 'POST',
-            url: Constants.api.legalPerson,
-            data: legalPerson,
-            
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('Authorization', 'JWT ' + token);
-            }.bind(this),
-        });
-    },
     getData(url, token){
         return $.ajax({
             type: 'GET',
-            url: url,
+            url: url + '?format=json',
             
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
             }.bind(this),
         });
     },
+    addData(url, data, token){
+        return $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'JWT ' + token);
+            }.bind(this),
+        });
+    },
+    addLegalPerson(legalPerson, token){
+        return this.addData(Constants.api.legalPersons, legalPerson, token);
+    },
+    addTicket(ticket, token){
+        return this.addData(Constants.api.tickets, ticket, token);
+    },
     getLegalPersons(token){
-        return this.getData(Constants.api.legalPersons,token);
+        return this.getData(Constants.api.legalPersons, token);
+    },
+    getLegalPersons(token){
+        return this.getData(Constants.api.tickets, token);
     }
 };

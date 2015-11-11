@@ -20,8 +20,8 @@ export default React.createClass({
 
     save(){
         Dispatcher.addLegalPerson(this.state, this.props.token)
-        .done((data)=>{
-            //success
+        .done((legalPerson)=>{
+            this.props.addLegalPerson(legalPerson);
         }.bind(this))
         .fail(()=>{
             //error

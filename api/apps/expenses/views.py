@@ -2,6 +2,7 @@ from models import LegalPerson, Ticket
 from rest_framework import viewsets
 from serializers import LegalPersonSerializer
 from serializers import TicketSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 
 class LegalPersonViewSet(viewsets.ModelViewSet):
