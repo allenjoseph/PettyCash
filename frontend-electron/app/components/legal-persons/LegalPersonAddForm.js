@@ -1,6 +1,6 @@
 import React from 'react';
 import update from 'react-addons-update';
-import Dispatcher from '../dispatchers/dispatcher';
+import Dispatcher from '../../dispatchers/dispatcher';
 
 export default React.createClass({
 

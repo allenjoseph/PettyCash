@@ -9,7 +9,7 @@ module.exports = function(grunt) {
                     debug: true,
                     transform: ['babelify']
                 },
-                files:{ 'app/dist/pettycash.js' : [
+                files:{ 'dist/pettycash.js' : [
                         'app/components/**/*.js',
                     ]
                 }

@@ -1,5 +1,5 @@
 var $ = require('jquery');
-import Constants from '../commons/constants';
+import Constants from '../config/constants';
 
 export default {
     login(credentials){
@@ -13,7 +13,8 @@ export default {
             });
         });
     },
-    getData(url, token){
+    getData(name, token){
+        var url = Constants.api[name];
         return $.ajax({
             type: 'GET',
             url: url + '?format=json',
@@ -39,11 +40,5 @@ export default {
     },
     addTicket(ticket, token){
         return this.addData(Constants.api.tickets, ticket, token);
-    },
-    getLegalPersons(token){
-        return this.getData(Constants.api.legalPersons, token);
-    },
-    getLegalPersons(token){
-        return this.getData(Constants.api.tickets, token);
     }
 };

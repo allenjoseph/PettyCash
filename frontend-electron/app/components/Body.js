@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './login';
-import Nav from './nav';
-import Content from './content';
+import Login from './Login';
+import Nav from './Nav';
+import Content from './Content';
 import update from 'react-addons-update';
-import Dispatcher from './dispatchers/dispatcher';
+import Dispatcher from '../dispatchers/dispatcher';
 
-let Wrapper = React.createClass({
+let Body = React.createClass({
 
     getInitialState() {
         return {
@@ -38,16 +38,16 @@ let Wrapper = React.createClass({
     },
 
     render(){
-        if(this.state.validAuth)
+        if(this.state.validAuth){
             return (
                 <div>
                     <Nav token={this.state.token}/>
                     <Content token={this.state.token}/>
                 </div>
             );
-        else
-            return <Login logIn={this.logIn} badCredentials={this.state.badCredentials}/>;
+        }
+        return <Login logIn={this.logIn} badCredentials={this.state.badCredentials}/>;
     }
 });
 
-ReactDOM.render(<Wrapper/>, document.getElementById('wrapper'));
+ReactDOM.render(<Body/>, document.getElementById('wrapper'));

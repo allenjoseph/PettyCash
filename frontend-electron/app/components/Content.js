@@ -1,7 +1,6 @@
 import React from 'react';
-import DataTable from './commons/dataTable';
-import Constants from './commons/constants';
-import ExpenseAddForm from './expenses/expenseAddForm';
+import DataTable from './commons/DataTable';
+import TicketAddForm from './tickets/TicketAddForm';
 
 export default React.createClass({
 
@@ -26,7 +25,7 @@ export default React.createClass({
     render(){
         let addForm,
             title = 'Gastos',
-            url = Constants.api.tickets,
+            url = 'tickets',
             columns = {
                 date: 'Fecha',
                 description: 'Descripcion',
@@ -38,7 +37,7 @@ export default React.createClass({
         if(this.state.showAddForm){
             addForm = <div className="row" key="addForm">
                         <div className="col-lg-12">
-                            <ExpenseAddForm close={this.closeAddForm} token={this.props.token}/>
+                            <TicketAddForm close={this.closeAddForm} token={this.props.token}/>
                             <hr/>
                         </div>
                     </div>;

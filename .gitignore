@@ -4,7 +4,7 @@ __pycache__/
 .DS_Store
 .idea/
 env/
-frontend-electron/app/dist/
+frontend-electron/dist/
 
 */migrations/
 */**/migrations/

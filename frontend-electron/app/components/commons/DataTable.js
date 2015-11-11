@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Constants from './constants';
+import Constants from '../../config/constants';
 import $ from 'jquery';
-import Dispatcher from '../dispatchers/dispatcher';
+import Dispatcher from '../../dispatchers/dispatcher';
 
 require('datatables-bootstrap3-plugin');
 

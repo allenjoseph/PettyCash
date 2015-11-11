@@ -1,8 +1,8 @@
 import React from 'react';
-import Select from '../commons/select';
-import LegalPersonAddForm from './legalPersonAddForm';
+import Select from '../commons/Select';
+import LegalPersonAddForm from '../legal-persons/LegalPersonAddForm';
 import update from 'react-addons-update';
-import Dispatcher from '../dispatchers/dispatcher';
+import Dispatcher from '../../dispatchers/dispatcher';
 
 export default React.createClass({
 
@@ -23,7 +23,7 @@ export default React.createClass({
 
     loadLegalPersons(){
 
-        Dispatcher.getLegalPersons(this.props.token)
+        Dispatcher.getData('legalPersons', this.props.token)
         .done(function(data){
             this.setState(update(this.state, {
                legalPersons: {$set: data || []}
