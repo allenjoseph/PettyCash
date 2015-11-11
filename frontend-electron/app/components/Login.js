@@ -1,78 +1,90 @@
 import React from 'react';
 import update from 'react-addons-update';
+import Dispatcher from '../dispatchers/dispatcher';
+import { Container, PageHeader, Row, Well, Form, FormGroup } from './commons/Layout';
 
 export default React.createClass({
     getInitialState() {
         return {
-            username:'',
-            password:'' 
+            credentials: {
+                username:'',
+                password:''
+            },
+            error: false
         };
     },
 
     changeUsername(e){
-        var newState = update(this.state, {
-            username: {$set : e.target.value}
-        });
-        this.setState(newState);
+        
+        this.setState(update(this.state, {
+            credentials: { username: {$set : e.target.value} }
+        }));
+        
     },
 
     changePassword(e){
-        var newState = update(this.state, {
-            password: {$set : e.target.value}
-        });
-        this.setState(newState);
+        
+        this.setState(update(this.state, {
+            credentials: { password: {$set : e.target.value} }
+        }));
+        
     },
 
     logIn(){
-        this.props.logIn(this.state);
+        
+        Dispatcher.login(this.state.credentials)
+        .done((data)=>{
+            
+            this.props.loginSuccess(data.token);
+            
+        }.bind(this))
+        .fail(()=>{
+            
+            this.setState(this.getInitialState());
+            
+        }.bind(this));
     },
 
     render(){
-        let alertBadCredentials,
-            disableLogIn = !this.state.username || !this.state.password;
+        let AlertError,
+            disableLogIn = !this.state.credentials.username || !this.state.credentials.password;
 
-        if(this.props.badCredentials){
-            alertBadCredentials = <div className="form-group">
-                                        <div className="col-sm-12">
-                                            <div className="alert alert-dismissible alert-danger">
-                                                <strong>Credenciales Invalidas!</strong> vuelve a intentarlo.
-                                            </div>
-                                        </div>
-                                    </div>;
+        if(this.state.error){
+            AlertError = <FormGroup>
+                            <div className="alert alert-dismissible alert-danger">
+                                <strong>Credenciales Invalidas!</strong> vuelve a intentarlo.
+                            </div>
+                        </FormGroup>;
         }
 
         return(
-            <div className="container" style={{marginTop: '50px'}}>
-                <h1>Petty Cash</h1>
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="well">
-                            <form className="form-horizontal">
-                                <fieldset>
-                                    {alertBadCredentials}
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label">User</label>
-                                        <div className="col-sm-10">
-                                            <input type="text" className="form-control" placeholder="User" autoComplete="off" onChange={this.changeUsername} />
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label">Password</label>
-                                        <div className="col-sm-10">
-                                            <input type="password" className="form-control" placeholder="Password" autoComplete="off" onChange={this.changePassword}/>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-sm-10 col-sm-offset-2">
-                                            <button type="button" className="btn btn-primary" onClick={this.logIn} disabled={disableLogIn}>Submit</button>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Container>
+                <PageHeader>
+                    <Row>
+                        <h1>Petty Cash</h1>
+                    </Row>
+                </PageHeader>
+                <Row>
+                    <Well>
+                        <Form>
+                            {AlertError}
+                            <FormGroup label="User">
+                                <input type="text" className="form-control" placeholder="User" autoComplete="off" 
+                                value={this.state.credentials.username} onChange={this.changeUsername} />
+                            </FormGroup>
+                            
+                            <FormGroup label="Password">
+                                <input type="password" className="form-control" placeholder="Password" autoComplete="off" 
+                                value={this.state.credentials.password} onChange={this.changePassword}/>
+                            </FormGroup>
+                            
+                            <FormGroup label="">
+                                <button type="button" className="btn btn-primary" onClick={this.logIn} disabled={disableLogIn}>Submit</button>
+                            </FormGroup>
+                        </Form>
+                    </Well>
+                </Row>
+            </Container>
         );
     }
 });

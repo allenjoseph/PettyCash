@@ -1,6 +1,7 @@
 import React from 'react';
 import DataTable from './commons/DataTable';
 import TicketAddForm from './tickets/TicketAddForm';
+import { Container, PageHeader, Row } from './commons/Layout';
 
 export default React.createClass({
 
@@ -35,35 +36,29 @@ export default React.createClass({
             };
 
         if(this.state.showAddForm){
-            addForm = <div className="row" key="addForm">
-                        <div className="col-lg-12">
-                            <TicketAddForm close={this.closeAddForm} token={this.props.token}/>
-                            <hr/>
-                        </div>
-                    </div>;
+            addForm = <Row>
+                        <TicketAddForm close={this.closeAddForm} token={this.props.token}/>
+                        <hr/>
+                    </Row>;
         }
 
         return(
-            <div className="container">
-                <div className="page-header" style={{marginTop: '50px'}}>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1>
-                                {title}
-                                <a href="#" className="btn btn-success pull-right" onClick={this.openAddForm}>Agregar</a>
-                            </h1>
-                        </div>
-                    </div>
-                </div>
+            <Container>
+                <PageHeader>
+                    <Row>
+                        <h1>
+                            {title}
+                            <a href="#" className="btn btn-success pull-right" onClick={this.openAddForm}>Agregar</a>
+                        </h1>
+                    </Row>
+                </PageHeader>
 
                 {addForm}
 
-                <div className="row">
-                    <div className="col-lg-12">
-                        <DataTable url={url} token={this.props.token} columns={columns}/>
-                    </div>
-                </div>
-            </div>
+                <Row>
+                    <DataTable url={url} token={this.props.token} columns={columns}/>
+                </Row>
+            </Container>
         );
     }
 });

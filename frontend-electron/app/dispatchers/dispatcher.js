@@ -3,15 +3,7 @@ import Constants from '../config/constants';
 
 export default {
     login(credentials){
-        return new Promise((resolve, reject) => {
-            $.post(Constants.api.auth, credentials)
-            .done((auth) => {
-                resolve(auth);
-            })
-            .fail(() => {
-                reject();
-            });
-        });
+        return $.post(Constants.api.auth, credentials);
     },
     getData(name, token){
         var url = Constants.api[name];

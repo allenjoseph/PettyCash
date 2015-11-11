@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'react-addons-update';
 import Dispatcher from '../../dispatchers/dispatcher';
+import { Form, FormGroup } from '../commons/Layout';
 
 export default React.createClass({
 
@@ -30,14 +31,13 @@ export default React.createClass({
 
     render(){
         return(
-            <div className="form-horizontal">
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Nombre</label>
-                    <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Nombre" name="name"
-                        value={this.state.name} onChange={this.updateValue}/>
-                    </div>
-                </div>
+            <Form>
+            
+                <FormGroup label="Nombre">
+                    <input type="text" className="form-control" placeholder="Nombre" name="name"
+                    value={this.state.name} onChange={this.updateValue}/>
+                </FormGroup>
+                
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Ruc</label>
                     <div className="col-sm-3">
@@ -50,13 +50,13 @@ export default React.createClass({
                         value={this.state.tags} onChange={this.updateValue}/>
                     </div>
                 </div>
-                <div className="form-group">
-                    <div className="col-sm-10 col-sm-offset-2">
-                        <button type="button" className="btn btn-primary" 
-                        onClick={this.save}>Guardar</button>
-                    </div>
-                </div>
-            </div>
+                
+                <FormGroup label="">
+                    <button type="button" className="btn btn-primary" 
+                    onClick={this.save}>Guardar</button>
+                </FormGroup>
+                
+            </Form>
         );
     }
 });

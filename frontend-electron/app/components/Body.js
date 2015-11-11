@@ -10,35 +10,20 @@ let Body = React.createClass({
 
     getInitialState() {
         return {
-            validAuth: false,
-            badCredentials: false,
             token: ''
         };
     },
 
-    logIn(credentials){
-        Dispatcher.login(credentials)
+    loginSuccess(token){
         
-        .then((auth)=>{
-
-            let newState = update(this.state, {
-                validAuth: {$set: true},
-                token: {$set: auth.token}
-            });
-            this.setState(newState);
-
-        }.bind(this), (e)=>{
-
-            let newState = update(this.state, {
-                badCredentials: {$set: true}
-            });
-            this.setState(newState);
+        this.setState(update(this.state, {
+            token: {$set: token}
+        }));
         
-        }.bind(this));
     },
 
     render(){
-        if(this.state.validAuth){
+        if(this.state.token){
             return (
                 <div>
                     <Nav token={this.state.token}/>
@@ -46,7 +31,7 @@ let Body = React.createClass({
                 </div>
             );
         }
-        return <Login logIn={this.logIn} badCredentials={this.state.badCredentials}/>;
+        return <Login loginSuccess={this.loginSuccess}/>;
     }
 });
 
