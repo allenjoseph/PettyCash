@@ -47,11 +47,13 @@ export let NavBar = React.createClass({
         
         let styles = {
             marginBottom: 0
-        }
+        };
         
         return (
             <nav className="navbar navbar-default navbar-fixed-top" role="navigation" style={styles}>
-                <div className="container"> {this.props.children} </div>
+                <div className="container"> 
+                    {this.props.children}
+                </div>
             </nav>
         );
     }

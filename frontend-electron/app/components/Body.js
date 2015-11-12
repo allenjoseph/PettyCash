@@ -30,8 +30,9 @@ let Body = React.createClass({
                     <Content token={this.state.token}/>
                 </div>
             );
+        }else{
+            return <Login loginSuccess={this.loginSuccess}/>;
         }
-        return <Login loginSuccess={this.loginSuccess}/>;
     }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar, Container, NavHeader, NavBarCollapse, NavBarContent } from './commons/Layout'
+import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from './commons/Layout';
 
 export default React.createClass({
     getInitialState() {
@@ -10,10 +10,10 @@ export default React.createClass({
     render(){
         return(
             <NavBar>
-                <NavHeader>
+                <NavBarHeader>
                     <i className="fa fa-book fa-fw"></i>
                     <strong>Petty Cash</strong>
-                </NavHeader>
+                </NavBarHeader>
 
                 <NavBarCollapse>
                     <NavBarContent>
