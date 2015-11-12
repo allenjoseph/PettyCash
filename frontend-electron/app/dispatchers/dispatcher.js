@@ -5,8 +5,8 @@ export default {
     login(credentials){
         return $.post(Constants.api.auth, credentials);
     },
-    getData(name, token){
-        var url = Constants.api[name];
+    getData(ref, token){
+        var url = Constants.api[ref];
         return $.ajax({
             type: 'GET',
             url: url + '?format=json',

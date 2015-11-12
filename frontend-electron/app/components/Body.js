@@ -5,19 +5,24 @@ import Nav from './Nav';
 import Content from './Content';
 import update from 'react-addons-update';
 import Dispatcher from '../dispatchers/dispatcher';
+import Constants from '../config/constants';
 
 let Body = React.createClass({
 
     getInitialState() {
         return {
-            token: ''
+            token: '',
+            option: '',
+            title: ''
         };
     },
 
     loginSuccess(token){
         
         this.setState(update(this.state, {
-            token: {$set: token}
+            token: {$set: token},
+            option: {$set: Constants.options.tickets},
+            title: {$set: Constants.titles.tickets}
         }));
         
     },
@@ -26,8 +31,9 @@ let Body = React.createClass({
         if(this.state.token){
             return (
                 <div>
-                    <Nav token={this.state.token}/>
-                    <Content token={this.state.token}/>
+                    <Nav token={this.state.token} option={this.state.option}/>
+                    <Content token={this.state.token} option={this.state.option}
+                    title={this.state.title}/>
                 </div>
             );
         }else{

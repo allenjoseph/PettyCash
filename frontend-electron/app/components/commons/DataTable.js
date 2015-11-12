@@ -16,7 +16,7 @@ export default React.createClass({
     
     loadData(){
 
-        Dispatcher.getData(this.props.url, this.props.token)
+        Dispatcher.getData(this.props.ref, this.props.token)
         
         .done(function(data){
             this.setState({ rows: data });
@@ -46,7 +46,7 @@ export default React.createClass({
 
         let columnsKeys = [],
             columnsNames = [],
-            columns = this.props.columns;
+            columns = Constants.dataTableColumns[this.props.option];
 
         for(var key in columns){
             if(columns.hasOwnProperty(key)){

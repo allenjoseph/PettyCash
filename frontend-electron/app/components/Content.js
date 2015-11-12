@@ -22,22 +22,17 @@ export default React.createClass({
             showAddForm: false
         });
     },
+    
+    updateDataTable(){
+        this.closeAddForm();
+    },
 
     render(){
-        let addForm,
-            title = 'Gastos',
-            url = 'tickets',
-            columns = {
-                date: 'Fecha',
-                description: 'Descripcion',
-                amount: 'Cantidad',
-                unitPrice: 'Precio unitario',
-                totalPrice: 'Precio total'
-            };
+        let addForm;
 
         if(this.state.showAddForm){
             addForm = <Row>
-                        <TicketAddForm close={this.closeAddForm} token={this.props.token}/>
+                        <TicketAddForm close={this.closeAddForm} token={this.props.token} updateDataTable={this.updateDataTable}/>
                         <hr/>
                     </Row>;
         }
@@ -47,7 +42,7 @@ export default React.createClass({
                 <PageHeader>
                     <Row>
                         <h1>
-                            {title}
+                            {this.props.title}
                             <a href="#" className="btn btn-success pull-right" onClick={this.openAddForm}>Agregar</a>
                         </h1>
                     </Row>
@@ -56,7 +51,7 @@ export default React.createClass({
                 {addForm}
 
                 <Row>
-                    <DataTable url={url} token={this.props.token} columns={columns}/>
+                    <DataTable ref={this.props.option} token={this.props.token}/>
                 </Row>
             </Container>
         );

@@ -1,8 +1,19 @@
 export default {
+    options: {
+        tickets: 'tickets',
+        legalPersons: 'legalpersons',
+        stadistics: 'stadistics',
+        ruc: 'ruc'
+    },
+    titles:{
+        tickets: 'Gastos',
+        stadistics: 'Estadisticas',
+        ruc: 'Consulta RUC'
+    },
     api: {
         auth: 'http://localhost:8000/api-token-auth/',
-        tickets: 'http://127.0.0.1:8000/tickets/',
-        legalPersons: 'http://127.0.0.1:8000/legalpersons/',
+        tickets: 'http://127.0.0.1:8000/' + this.options.tickets + '/',
+        legalPersons: 'http://127.0.0.1:8000/legalpersons/' + this.options.legalPersons + '/',
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',
@@ -28,6 +39,15 @@ export default {
         'oAria': {
             'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
             'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+        }
+    },
+    dataTableColumns : {
+        tickets: {
+            date: 'Fecha',
+            description: 'Descripcion',
+            amount: 'Cantidad',
+            unitPrice: 'Precio unitario',
+            totalPrice: 'Precio total'
         }
     }
 };

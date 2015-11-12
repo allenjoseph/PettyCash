@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from './commons/Layout';
+import Constants from '../config/constants';
 
 export default React.createClass({
     getInitialState() {
@@ -17,24 +18,24 @@ export default React.createClass({
 
                 <NavBarCollapse>
                     <NavBarContent>
-                        <li className={this.state.expenses ? 'active' : ''}>
+                        <li className={this.props.option === Constants.options.tickets ? 'active' : ''}>
                             <a href="javascript:void(0)">
-                                <i className="fa fa-usd fa-fw"></i> Gastos
+                                <i className="fa fa-usd fa-fw"></i> {Constants.titles.tickets}
                             </a>
                         </li>
-                        <li>
+                        <li className={this.props.option === Constants.options.stadistics ? 'active' : ''}>
                             <a href="javascript:void(0)">
-                                <i className="fa fa-bar-chart-o fa-fw"></i> Estadisticas
+                                <i className="fa fa-bar-chart-o fa-fw"></i> {Constants.titles.stadistics}
                             </a>
                         </li>
-                        <li>
+                        <li className={this.props.option === Constants.options.ruc ? 'active' : ''}>
                             <a href="javascript:void(0)">
-                                <i className="fa fa-child fa-fw"></i> Consulta RUC
+                                <i className="fa fa-child fa-fw"></i> {Constants.titles.ruc}
                             </a>
                         </li>
                     </NavBarContent>
 
-                    <NavBarContent orientation="right"> 
+                    <NavBarContent orientation="right">
                         <li className="dropdown">
                             <a className="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
                                 <i className="fa fa-user fa-fw"></i> Daniela <span className="caret"></span>
