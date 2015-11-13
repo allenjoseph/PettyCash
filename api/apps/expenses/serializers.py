@@ -1,4 +1,4 @@
-from models import LegalPerson, Ticket
+from models import LegalPerson, Ticket, Category
 from rest_framework import serializers
 
 
@@ -10,7 +10,15 @@ class LegalPersonSerializer(serializers.ModelSerializer):
             'name',
             'ruc',
             'dni',
-            'tags',
+        )
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'name',
         )
 
 
@@ -23,6 +31,9 @@ class TicketSerializer(serializers.ModelSerializer):
             'description',
             'legal_person',
             'total_price',
-            'created_by',
+            'category',
+            'created_date'
+        )
+        read_only_fields = (
             'created_date',
         )

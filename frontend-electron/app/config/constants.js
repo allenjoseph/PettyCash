@@ -1,7 +1,8 @@
 export default {
     options: {
         tickets: 'tickets',
-        legalPersons: 'legalpersons',
+        legalPersons: 'legalPersons',
+        categories: 'categories',
         stadistics: 'stadistics',
         ruc: 'ruc'
     },
@@ -12,8 +13,9 @@ export default {
     },
     api: {
         auth: 'http://localhost:8000/api-token-auth/',
-        tickets: 'http://127.0.0.1:8000/' + this.options.tickets + '/',
-        legalPersons: 'http://127.0.0.1:8000/legalpersons/' + this.options.legalPersons + '/',
+        tickets: 'http://localhost:8000/tickets/',
+        legalPersons: 'http://localhost:8000/legalpersons/',
+        categories: 'http://localhost:8000/categories/'
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',
@@ -43,11 +45,10 @@ export default {
     },
     dataTableColumns : {
         tickets: {
-            date: 'Fecha',
+            created_date: 'Fecha',
+            number: 'Codigo',
             description: 'Descripcion',
-            amount: 'Cantidad',
-            unitPrice: 'Precio unitario',
-            totalPrice: 'Precio total'
+            total_price: 'Precio total'
         }
     }
 };

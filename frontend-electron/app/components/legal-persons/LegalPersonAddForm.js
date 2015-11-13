@@ -8,8 +8,7 @@ export default React.createClass({
     getInitialState() {
         return {
             name: '',
-            ruc: '',
-            tags: '', 
+            ruc: ''
         };
     },
 
@@ -33,23 +32,19 @@ export default React.createClass({
         return(
             <Form>
             
-                <FormGroup label="Nombre">
-                    <input type="text" className="form-control" placeholder="Nombre" name="name"
-                    value={this.state.name} onChange={this.updateValue}/>
-                </FormGroup>
-                
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Ruc</label>
                     <div className="col-sm-3">
                         <input type="text" className="form-control" placeholder="Ruc" name="ruc"
                         value={this.state.ruc} onChange={this.updateValue}/>
                     </div>
-                    <label className="col-sm-1 control-label">Tags</label>
-                    <div className="col-sm-6">
-                        <input type="text" className="form-control" placeholder="Tags" name="tags" 
-                        value={this.state.tags} onChange={this.updateValue}/>
-                    </div>
                 </div>
+
+                <FormGroup label="Nombre">
+                    <input type="text" className="form-control" placeholder="Nombre" name="name"
+                    value={this.state.name} onChange={this.updateValue}/>
+                </FormGroup>
+                
                 
                 <FormGroup label="">
                     <button type="button" className="btn btn-primary" 

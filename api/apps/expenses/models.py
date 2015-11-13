@@ -7,10 +7,18 @@ class LegalPerson(models.Model):
     name = models.CharField(max_length=100)
     ruc = models.CharField(max_length=100, blank=True)
     dni = models.CharField(max_length=100, blank=True)
-    tags = models.CharField(max_length=100, blank=True)
     created_by = models.ForeignKey(User, related_name="legal_person_created")
     modified_by = models.ForeignKey(User, related_name="legal_person_modified")
+    created_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -22,6 +30,7 @@ class Ticket(models.Model):
     description = models.CharField(max_length=300)
     legal_person = models.ForeignKey(LegalPerson)
     total_price = models.FloatField()
+    category = models.ForeignKey(Category, null=True, blank=True)
     created_by = models.ForeignKey(User, related_name="ticket_created")
     modified_by = models.ForeignKey(User, related_name="ticket_modified")
     created_date = models.DateTimeField(auto_now_add=True)

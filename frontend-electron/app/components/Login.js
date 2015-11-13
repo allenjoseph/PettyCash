@@ -40,7 +40,9 @@ export default React.createClass({
         }.bind(this))
         .fail(()=>{
             
-            this.setState(this.getInitialState());
+            this.setState(update(this.state, {
+                error: {$set: true}
+            }));
             
         }.bind(this));
     },

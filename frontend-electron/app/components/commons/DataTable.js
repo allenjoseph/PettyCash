@@ -2,34 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Constants from '../../config/constants';
 import $ from 'jquery';
-import Dispatcher from '../../dispatchers/dispatcher';
+import Moment from 'moment';
 
 require('datatables-bootstrap3-plugin');
 
 export default React.createClass({
-    
-    getInitialState: function() {
-        return {
-            rows: [] 
-        };
-    },
-    
-    loadData(){
-
-        Dispatcher.getData(this.props.ref, this.props.token)
-        
-        .done(function(data){
-            this.setState({ rows: data });
-        }.bind(this))
-
-        .fail(function(){
-
-        }.bind(this));
-    },
-    
-    componentDidMount() {
-        this.loadData();
-    },
     
     componentDidUpdate: function() {
         let $table = $(ReactDOM.findDOMNode(this.refs.dataTable));
@@ -56,10 +33,13 @@ export default React.createClass({
             }
         }
 
-        let rowsValues = this.state.rows.map(function(elem){
+        let rowsValues = this.props.data.map(function(elem){
 
             let dataColumns = columnsKeys.map(function(key){
                 let value = elem[key];
+                if(key === 'created_date'){
+                    value = Moment(value).format('DD/MM/YYYY');
+                }
                 return <td key={key}>{value}</td>;
             });
 

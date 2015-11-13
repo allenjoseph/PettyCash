@@ -89,7 +89,7 @@ export let NavBarCollapse = React.createClass({
 
 export let NavBarContent = React.createClass({
     render(){
-        let orientation = this.props.orientation ? 'navbar-' + orientation : '';
+        let orientation = this.props.orientation ? 'navbar-' + this.props.orientation : '';
         return (
             <ul className={'nav navbar-nav ' + orientation}>
                 {this.props.children}
@@ -104,11 +104,11 @@ export let Form = React.createClass({
             return ( <form className="form-vertical">{this.props.children}</form> );
         }
         return (
-            <form className="form-horizontal">
+            <div className="form-horizontal">
                 <fieldset>
                     {this.props.children}
                 </fieldset>
-            </form>
+            </div>
         );
    } 
 });

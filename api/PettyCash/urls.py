@@ -21,6 +21,7 @@ from apps.expenses import views
 router = routers.SimpleRouter()
 router.register(r'legalpersons', views.LegalPersonViewSet)
 router.register(r'tickets', views.TicketViewSet)
+router.register(r'categories', views.CategoryViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                     transform: ['babelify']
                 },
                 files:{ 'dist/pettycash.js' : [
-                        'app/components/**/*.js',
+                        'app/**/*.js',
                     ]
                 }
             },
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         watch:{
             options: {livereload: true},
             browserify: {
-                files: ['app/components/**/*.js'],
+                files: ['app/**/*.js'],
                 tasks: ['browserify']
             }
         }

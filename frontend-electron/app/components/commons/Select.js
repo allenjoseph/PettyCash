@@ -10,7 +10,7 @@ export default React.createClass({
 
         return(
             <select className={this.props.style} onChange={this.props.onChange} 
-            disabled={this.props.disabled} value={this.props.value}>
+            disabled={this.props.disabled} value={this.props.value} name={this.props.name}>
             
                 <option value="">{this.props.placeholder}</option>
                 {options}

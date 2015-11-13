@@ -2,13 +2,20 @@ import React from 'react';
 import DataTable from './commons/DataTable';
 import TicketAddForm from './tickets/TicketAddForm';
 import { Container, PageHeader, Row } from './commons/Layout';
+import Dispatcher from '../dispatchers/dispatcher';
+import update from 'react-addons-update';
 
 export default React.createClass({
 
     getInitialState: function() {
         return {
-            showAddForm: false 
+            showAddForm: false,
+            data: []
         };
+    },
+
+    componentDidMount() {
+        this.loadData();
     },
 
     openAddForm(){
@@ -22,9 +29,30 @@ export default React.createClass({
             showAddForm: false
         });
     },
+
+    loadData(){
+
+        Dispatcher.getData(this.props.option, this.props.token)
+        
+        .done(function(data){
+            
+            this.setState(update(this.state, {
+                data: {$set: data}
+            }));
+
+        }.bind(this))
+
+        .fail(function(){
+
+        }.bind(this));
+    },
     
-    updateDataTable(){
-        this.closeAddForm();
+    addNewRecord(record){
+        
+        this.setState(update(this.state, {
+            showAddForm: {$set: false},
+            data: {$push: [record]}
+        }));
     },
 
     render(){
@@ -32,7 +60,7 @@ export default React.createClass({
 
         if(this.state.showAddForm){
             addForm = <Row>
-                        <TicketAddForm close={this.closeAddForm} token={this.props.token} updateDataTable={this.updateDataTable}/>
+                        <TicketAddForm close={this.closeAddForm} token={this.props.token} addNewRecord={this.addNewRecord}/>
                         <hr/>
                     </Row>;
         }
@@ -51,7 +79,7 @@ export default React.createClass({
                 {addForm}
 
                 <Row>
-                    <DataTable ref={this.props.option} token={this.props.token}/>
+                    <DataTable data={this.state.data} option={this.props.option} token={this.props.token}/>
                 </Row>
             </Container>
         );
