@@ -24,13 +24,16 @@ class Category(models.Model):
         return self.name
 
 
-class Ticket(models.Model):
+class Expense(models.Model):
     id = models.AutoField(primary_key=True)
-    number = models.CharField(max_length=100)
+    date = models.DateTimeField()
     description = models.CharField(max_length=300)
-    legal_person = models.ForeignKey(LegalPerson)
     total_price = models.FloatField()
     category = models.ForeignKey(Category, null=True, blank=True)
+    
+    number = models.CharField(max_length=100, blank=True)
+    legal_person = models.ForeignKey(LegalPerson, null=True, blank=True)
+    
     created_by = models.ForeignKey(User, related_name="ticket_created")
     modified_by = models.ForeignKey(User, related_name="ticket_modified")
     created_date = models.DateTimeField(auto_now_add=True)
@@ -38,3 +41,22 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class Card(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    
+    number = models.CharField(max_length=100, blank=True)
+    rate = models.FloatField(null=True, blank=True)
+    rate_credit = models.FloatField(null=True, blank=True)
+    
+    
+class Installment(models.Model):
+    id = models.AutoField(primary_key=True)
+    expense = models.ForeignKey(Expense)
+    card = models.ForeignKey(Card)
+    month = models.IntegerField()
+    amount = models.FloatField()
+    rate = models.FloatField()
+    
