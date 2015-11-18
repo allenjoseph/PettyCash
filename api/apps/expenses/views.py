@@ -1,7 +1,7 @@
-from models import LegalPerson, Ticket, Category
+from models import LegalPerson, Expense, Category
 from rest_framework import viewsets
 from serializers import LegalPersonSerializer
-from serializers import TicketSerializer
+from serializers import ExpenseSerializer
 from serializers import CategorySerializer
 
 
@@ -15,6 +15,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
-class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
+class ExpenseViewSet(viewsets.ModelViewSet):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer

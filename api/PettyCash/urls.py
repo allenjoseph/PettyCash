@@ -20,7 +20,7 @@ from apps.expenses import views
 
 router = routers.SimpleRouter()
 router.register(r'legalpersons', views.LegalPersonViewSet)
-router.register(r'tickets', views.TicketViewSet)
+router.register(r'expenses', views.ExpenseViewSet)
 router.register(r'categories', views.CategoryViewSet)
 
 urlpatterns = [

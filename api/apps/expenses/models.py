@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from enums import RemindMe
 
 
 class LegalPerson(models.Model):
@@ -33,6 +34,7 @@ class Expense(models.Model):
     
     number = models.CharField(max_length=100, blank=True)
     legal_person = models.ForeignKey(LegalPerson, null=True, blank=True)
+    repeat = models.IntegerField(default=RemindMe.NEVER.value, blank=True)
     
     created_by = models.ForeignKey(User, related_name="ticket_created")
     modified_by = models.ForeignKey(User, related_name="ticket_modified")
@@ -46,6 +48,9 @@ class Expense(models.Model):
 class Card(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    
+    start_amount = models.FloatField(default=0, blank=True)
+    close_day = models.IntegerField(null=True, blank=True)
     
     number = models.CharField(max_length=100, blank=True)
     rate = models.FloatField(null=True, blank=True)
