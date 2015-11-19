@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from enums import RemindMe
+from enums import RemindMe, Currency
 
 
 class LegalPerson(models.Model):
@@ -31,13 +31,17 @@ class Expense(models.Model):
     description = models.CharField(max_length=300)
     total_price = models.FloatField()
     category = models.ForeignKey(Category, null=True, blank=True)
-    
+
     number = models.CharField(max_length=100, blank=True)
     legal_person = models.ForeignKey(LegalPerson, null=True, blank=True)
-    repeat = models.IntegerField(default=RemindMe.NEVER.value, blank=True)
-    
-    created_by = models.ForeignKey(User, related_name="ticket_created")
-    modified_by = models.ForeignKey(User, related_name="ticket_modified")
+    repeat = models.IntegerField(
+        default=RemindMe.NEVER.value, null=True, blank=True)
+    currency = models.IntegerField(
+        default=Currency.PEN.value, null=True, blank=True)
+    exchange = models.FloatField(null=True, blank=True)
+
+    created_by = models.ForeignKey(User, related_name="expense_created")
+    modified_by = models.ForeignKey(User, related_name="expense_modified")
     created_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -48,15 +52,20 @@ class Expense(models.Model):
 class Card(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    
-    start_amount = models.FloatField(default=0, blank=True)
+
+    start_amount = models.FloatField(default=0, null=True, blank=True)
     close_day = models.IntegerField(null=True, blank=True)
-    
+
     number = models.CharField(max_length=100, blank=True)
     rate = models.FloatField(null=True, blank=True)
     rate_credit = models.FloatField(null=True, blank=True)
-    
-    
+
+    created_by = models.ForeignKey(User, related_name="card_created")
+    modified_by = models.ForeignKey(User, related_name="card_modified")
+    created_date = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
+
 class Installment(models.Model):
     id = models.AutoField(primary_key=True)
     expense = models.ForeignKey(Expense)
@@ -64,4 +73,3 @@ class Installment(models.Model):
     month = models.IntegerField()
     amount = models.FloatField()
     rate = models.FloatField()
-    

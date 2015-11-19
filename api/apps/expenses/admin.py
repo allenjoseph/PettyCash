@@ -36,6 +36,8 @@ class ExpenseAdmin(admin.ModelAdmin):
         'number',
         'legal_person',
         'repeat',
+        'currency',
+        'exchange',
         'created_by',
         'modified_by',
         'created_date',
@@ -53,9 +55,13 @@ class CardAdmin(admin.ModelAdmin):
         'number',
         'rate',
         'rate_credit',
+        'created_by',
+        'modified_by',
+        'created_date',
+        'last_modified',
     )
-    
-    
+
+
 @admin.register(Installment)
 class InstallmentAdmin(admin.ModelAdmin):
     list_display = (
