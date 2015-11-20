@@ -16,11 +16,14 @@ class Expense(models.Model):
     number = models.CharField(max_length=100, blank=True)
     legal_person = models.ForeignKey(LegalPerson, null=True, blank=True)
     repeat = models.IntegerField(
-        default=RemindMe.NEVER.value, null=True, blank=True)
+        default=RemindMe.NEVER.value,
+        choices=RemindMe.choices(), null=True, blank=True)
     currency = models.IntegerField(
-        default=Currency.PEN.value, null=True, blank=True)
+        default=Currency.PEN.value,
+        choices=Currency.choices(), null=True, blank=True)
     exchange = models.FloatField(null=True, blank=True)
     card = models.ForeignKey(Card)
+    installments = models.IntegerField(default=1, null=True, blank=True)
 
     created_by = models.ForeignKey(User, related_name="expense_created")
     modified_by = models.ForeignKey(User, related_name="expense_modified")

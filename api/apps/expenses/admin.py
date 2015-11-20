@@ -42,6 +42,7 @@ class ExpenseAdmin(admin.ModelAdmin):
         'currency',
         'exchange',
         'card',
+        'installments',
         'created_by',
         'modified_by',
         'created_date',
