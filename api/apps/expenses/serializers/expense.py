@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..enums import RemindMe, Currency
-from ..models import Expense
+from ..models.expense import Expense
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
@@ -17,6 +17,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
             'repeat',
             'currency',
             'exchange',
+            'card',
             'created_date',
         )
         read_only_fields = (

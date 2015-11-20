@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Installment
+from ..models.installment import Installment
 
 
 class InstallmentSerializer(serializers.ModelSerializer):
@@ -8,7 +8,6 @@ class InstallmentSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'expense',
-            'card',
             'month',
             'amount',
             'rate',

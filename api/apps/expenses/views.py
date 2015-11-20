@@ -1,6 +1,9 @@
 from rest_framework import viewsets
-from models import LegalPerson, Expense, Category
-from models import Card, Installment
+from models.legalPerson import LegalPerson
+from models.expense import Expense
+from models.category import Category
+from models.card import Card
+from models.installment import Installment
 from serializers.legalPerson import LegalPersonSerializer
 from serializers.category import CategorySerializer
 from serializers.card import CardSerializer

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import LegalPerson
+from ..models.legalPerson import LegalPerson
 
 
 class LegalPersonSerializer(serializers.ModelSerializer):

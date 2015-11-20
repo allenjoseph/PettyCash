@@ -1,6 +1,9 @@
 from django.contrib import admin
-from models import LegalPerson, Expense, Category
-from models import Card, Installment
+from models.legalPerson import LegalPerson
+from models.expense import Expense
+from models.category import Category
+from models.card import Card
+from models.installment import Installment
 
 
 @admin.register(LegalPerson)
@@ -38,6 +41,7 @@ class ExpenseAdmin(admin.ModelAdmin):
         'repeat',
         'currency',
         'exchange',
+        'card',
         'created_by',
         'modified_by',
         'created_date',
@@ -67,7 +71,6 @@ class InstallmentAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'expense',
-        'card',
         'month',
         'amount',
         'rate',
