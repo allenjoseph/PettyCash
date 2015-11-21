@@ -3,8 +3,6 @@ from ..models.card import Card
 
 
 class CardSerializer(serializers.ModelSerializer):
-    start_amount = serializers.FloatField(default=0)
-
     class Meta:
         model = Card
         fields = (
