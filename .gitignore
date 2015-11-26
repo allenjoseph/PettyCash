@@ -5,6 +5,7 @@ __pycache__/
 .idea/
 env/
 frontend-electron/dist/
+npm-debug.log
 
 */migrations/
 */**/migrations/

@@ -9,6 +9,14 @@ from serializers.category import CategorySerializer
 from serializers.card import CardSerializer
 from serializers.expense import ExpenseSerializer
 from serializers.installment import InstallmentSerializer
+from serializers.user import UserSerializer
+
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'user': UserSerializer(user).data
+    }
 
 
 class LegalPersonViewSet(viewsets.ModelViewSet):
