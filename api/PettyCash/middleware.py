@@ -51,7 +51,8 @@ class JWTAuthMiddleware(object):
         if user.is_authenticated():
             return user
         try:
-            user_jwt = JSONWebTokenAuthentication().authenticate(Request(request))
+            user_jwt = JSONWebTokenAuthentication().authenticate(
+                Request(request))
             if user_jwt is not None:
                 return user_jwt[0]
         except AuthenticationFailed:
@@ -59,8 +60,10 @@ class JWTAuthMiddleware(object):
         return user
 
     def process_request(self, request):
-        assert hasattr(request, 'session'),\
-        """The Django authentication middleware requires session middleware to be installed.
-         Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."""
-
+        assert hasattr(request, 'session')
+        """
+        The Django authentication middleware requires session middleware
+        to be installed. Edit your MIDDLEWARE_CLASSES setting to insert
+        'django.contrib.sessions.middleware.SessionMiddleware'.
+        """
         request.user = SimpleLazyObject(lambda: self.get_user_jwt(request))
