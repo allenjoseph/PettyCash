@@ -38,6 +38,15 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 
+    def get_queryset(self):
+        card = self.request.GET['card']
+        
+        if card:
+            expenses = Expense.objects.filter(card__id=card)
+            return expenses
+            
+        return None
+
 
 class CardViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
