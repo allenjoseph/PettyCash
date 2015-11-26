@@ -13,9 +13,14 @@ from serializers.user import UserSerializer
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
+    carsSerializer = []
+    if user:
+        cars = Card.objects.filter(created_by=user).order_by('name')
+        carsSerializer = CardSerializer(cars).data
     return {
         'token': token,
-        'user': UserSerializer(user).data
+        'user': UserSerializer(user).data,
+        'cards': carsSerializer
     }
 
 
