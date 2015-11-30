@@ -2,6 +2,7 @@ import React from 'react';
 import update from 'react-addons-update';
 import Dispatcher from '../dispatchers/dispatcher';
 import { Container, PageHeader, Row, Well, Form, FormGroup } from './commons/Layout';
+import Cache from '../utils/cache';
 
 export default React.createClass({
     getInitialState() {
@@ -35,6 +36,10 @@ export default React.createClass({
         Dispatcher.login(this.state.credentials)
         .done((data)=>{
             
+            if(data.token){
+                Cache.set('token', data.token);
+                Cache.set('card_selected', data.cards[0]);
+            }
             this.props.loginSuccess(data.token);
             
         }.bind(this))

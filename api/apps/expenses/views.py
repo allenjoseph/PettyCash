@@ -10,17 +10,18 @@ from serializers.card import CardSerializer
 from serializers.expense import ExpenseSerializer
 from serializers.installment import InstallmentSerializer
 from serializers.user import UserSerializer
+from datetime import datetime
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
-    carsSerializer = []
+    cards = []
     if user:
-        cars = Card.objects.filter(created_by=user).order_by('name')
-        carsSerializer = CardSerializer(cars).data
+        queryset = Card.objects.filter(created_by=user)
+        cards = CardSerializer(queryset, many=True).data
     return {
         'token': token,
         'user': UserSerializer(user).data,
-        'cards': carsSerializer
+        'cards': cards
     }
 
 
@@ -39,13 +40,17 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     serializer_class = ExpenseSerializer
 
     def get_queryset(self):
+        user = self.request.user
         card = self.request.GET['card']
-        
-        if card:
-            expenses = Expense.objects.filter(card__id=card)
+
+        if user and card:
+            expenses = Expense.objects.filter(
+                card__id=card,
+                created_by=user
+            )
             return expenses
             
-        return None
+        return Expense.objects.none()
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -56,3 +61,17 @@ class CardViewSet(viewsets.ModelViewSet):
 class InstallmentViewSet(viewsets.ModelViewSet):
     queryset = Installment.objects.all()
     serializer_class = InstallmentSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        date = self.request.GET['date']
+        month = datetime.strptime(date, '%m-%Y')
+
+        if user and month:
+            installments = Installment.objects.filter(
+                month=month,
+                created_by=user
+            )
+            return installments
+
+        return Installment.objects.none()

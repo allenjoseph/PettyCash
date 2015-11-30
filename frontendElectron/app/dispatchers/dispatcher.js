@@ -1,21 +1,28 @@
 var $ = require('jquery');
 import Constants from '../config/constants';
+import Cache from '../utils/cache';
 
 export default {
+
     login(credentials){
         return $.post(Constants.api.auth, credentials);
     },
+
     getData(ref, token){
+        debugger;
         var url = Constants.api[ref];
+        var card = Cache.get('card_selected');
+        
         return $.ajax({
             type: 'GET',
-            url: url + '?format=json',
+            url: url + '?card=' + card.id + '&format=json',
             
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
             }.bind(this),
         });
     },
+
     addData(url, data, token){
         return $.ajax({
             type: 'POST',

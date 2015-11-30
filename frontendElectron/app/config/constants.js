@@ -13,7 +13,7 @@ export default {
     },
     api: {
         auth: 'http://localhost:8000/api-token-auth/',
-        tickets: 'http://localhost:8000/tickets/',
+        tickets: 'http://localhost:8000/expenses/',
         legalPersons: 'http://localhost:8000/legalpersons/',
         categories: 'http://localhost:8000/categories/'
     },
