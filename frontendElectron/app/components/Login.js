@@ -40,7 +40,7 @@ export default React.createClass({
                 Cache.set('token', data.token);
                 Cache.set('card_selected', data.cards[0]);
             }
-            this.props.loginSuccess(data.token);
+            this.props.loginSuccess();
             
         }.bind(this))
         .fail(()=>{

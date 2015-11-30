@@ -8,10 +8,10 @@ export default {
         return $.post(Constants.api.auth, credentials);
     },
 
-    getData(ref, token){
-        debugger;
+    getData(ref){
         var url = Constants.api[ref];
         var card = Cache.get('card_selected');
+        var token = Cache.get('token');
         
         return $.ajax({
             type: 'GET',
@@ -23,7 +23,9 @@ export default {
         });
     },
 
-    addData(url, data, token){
+    addData(url, data){
+        var token = Cache.get('token');
+        
         return $.ajax({
             type: 'POST',
             url: url,
@@ -34,10 +36,10 @@ export default {
             }.bind(this),
         });
     },
-    addLegalPerson(legalPerson, token){
-        return this.addData(Constants.api.legalPersons, legalPerson, token);
+    addLegalPerson(legalPerson){
+        return this.addData(Constants.api.legalPersons, legalPerson);
     },
-    addTicket(ticket, token){
-        return this.addData(Constants.api.tickets, ticket, token);
+    addTicket(ticket){
+        return this.addData(Constants.api.tickets, ticket);
     }
 };

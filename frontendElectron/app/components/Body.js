@@ -6,21 +6,20 @@ import Content from './Content';
 import update from 'react-addons-update';
 import Dispatcher from '../dispatchers/dispatcher';
 import Constants from '../config/constants';
+import Cache from '../utils/cache';
 
 let Body = React.createClass({
 
     getInitialState() {
         return {
-            token: '',
             option: '',
             title: ''
         };
     },
 
-    loginSuccess(token){
+    loginSuccess(){
         
         this.setState(update(this.state, {
-            token: {$set: token},
             option: {$set: Constants.options.tickets},
             title: {$set: Constants.titles.tickets}
         }));
@@ -28,11 +27,11 @@ let Body = React.createClass({
     },
 
     render(){
-        if(this.state.token){
+        if(Cache.get('token')){
             return (
                 <div>
-                    <Nav token={this.state.token} option={this.state.option}/>
-                    <Content token={this.state.token} option={this.state.option}
+                    <Nav option={this.state.option}/>
+                    <Content option={this.state.option}
                     title={this.state.title}/>
                 </div>
             );

@@ -19,7 +19,7 @@ export default React.createClass({
     },
 
     save(){
-        Dispatcher.addLegalPerson(this.state, this.props.token)
+        Dispatcher.addLegalPerson(this.state)
         .done((legalPerson)=>{
             this.props.addLegalPerson(legalPerson);
         }.bind(this))

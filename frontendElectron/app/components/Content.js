@@ -32,7 +32,7 @@ export default React.createClass({
 
     loadData(){
 
-        Dispatcher.getData(this.props.option, this.props.token)
+        Dispatcher.getData(this.props.option)
         
         .done(function(data){
             
@@ -60,7 +60,7 @@ export default React.createClass({
 
         if(this.state.showAddForm){
             addForm = <Row>
-                        <TicketAddForm close={this.closeAddForm} token={this.props.token} addNewRecord={this.addNewRecord}/>
+                        <TicketAddForm close={this.closeAddForm} addNewRecord={this.addNewRecord}/>
                         <hr/>
                     </Row>;
         }
@@ -79,7 +79,7 @@ export default React.createClass({
                 {addForm}
 
                 <Row>
-                    <DataTable data={this.state.data} option={this.props.option} token={this.props.token}/>
+                    <DataTable data={this.state.data} option={this.props.option}/>
                 </Row>
             </Container>
         );

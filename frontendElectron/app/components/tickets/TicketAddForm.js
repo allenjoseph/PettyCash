@@ -30,7 +30,7 @@ export default React.createClass({
 
     loadLegalPersons(){
 
-        Dispatcher.getData(Constants.options.legalPersons, this.props.token)
+        Dispatcher.getData(Constants.options.legalPersons)
         .done(function(data){
             this.setState(update(this.state, {
                legalPersons: {$set: data || []}
@@ -40,7 +40,7 @@ export default React.createClass({
 
     loadCategories(){
 
-        Dispatcher.getData(Constants.options.categories, this.props.token)
+        Dispatcher.getData(Constants.options.categories)
         .done(function(data){
             this.setState(update(this.state, {
                categories: {$set: data || []}
@@ -76,7 +76,7 @@ export default React.createClass({
     },
 
     save(){
-        Dispatcher.addTicket(this.state.ticket, this.props.token)
+        Dispatcher.addTicket(this.state.ticket)
         .done((ticket)=>{
             this.setState(this.getInitialState());
             this.props.addNewRecord(ticket);
@@ -95,7 +95,7 @@ export default React.createClass({
                                     onClick={this.closeAddLegalPerson}>Cerrar</a>;
 
             legalPersonForm = <FormGroup>
-                                <LegalPersonAddForm token={this.props.token} addLegalPerson={this.addLegalPerson}/>
+                                <LegalPersonAddForm addLegalPerson={this.addLegalPerson}/>
                                 <hr/>
                             </FormGroup>;
         }
