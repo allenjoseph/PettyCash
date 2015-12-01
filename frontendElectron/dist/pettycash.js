@@ -35,33 +35,35 @@ var _configConstants = require('../config/constants');
 
 var _configConstants2 = _interopRequireDefault(_configConstants);
 
+var _utilsCache = require('../utils/cache');
+
+var _utilsCache2 = _interopRequireDefault(_utilsCache);
+
 var Body = _react2['default'].createClass({
     displayName: 'Body',
 
     getInitialState: function getInitialState() {
         return {
-            token: '',
             option: '',
             title: ''
         };
     },
 
-    loginSuccess: function loginSuccess(token) {
+    loginSuccess: function loginSuccess() {
 
         this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
-            token: { $set: token },
             option: { $set: _configConstants2['default'].options.tickets },
             title: { $set: _configConstants2['default'].titles.tickets }
         }));
     },
 
     render: function render() {
-        if (this.state.token) {
+        if (_utilsCache2['default'].get('token')) {
             return _react2['default'].createElement(
                 'div',
                 null,
-                _react2['default'].createElement(_Nav2['default'], { token: this.state.token, option: this.state.option }),
-                _react2['default'].createElement(_Content2['default'], { token: this.state.token, option: this.state.option,
+                _react2['default'].createElement(_Nav2['default'], { option: this.state.option }),
+                _react2['default'].createElement(_Content2['default'], { option: this.state.option,
                     title: this.state.title })
             );
         } else {
@@ -72,7 +74,7 @@ var Body = _react2['default'].createClass({
 
 _reactDom2['default'].render(_react2['default'].createElement(Body, null), document.getElementById('wrapper'));
 
-},{"../config/constants":10,"../dispatchers/dispatcher":11,"./Content":2,"./Login":3,"./Nav":4,"react":176,"react-addons-update":18,"react-dom":19}],2:[function(require,module,exports){
+},{"../config/constants":10,"../dispatchers/dispatcher":11,"../utils/cache":12,"./Content":2,"./Login":3,"./Nav":4,"react":176,"react-addons-update":18,"react-dom":19}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -130,10 +132,11 @@ exports['default'] = _react2['default'].createClass({
     },
 
     loadData: function loadData() {
+        var _this = this;
 
-        _dispatchersDispatcher2['default'].getData(this.props.option, this.props.token).done((function (data) {
+        _dispatchersDispatcher2['default'].getData(this.props.option).done((function (data) {
 
-            this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
+            _this.setState((0, _reactAddonsUpdate2['default'])(_this.state, {
                 data: { $set: data }
             }));
         }).bind(this)).fail((function () {}).bind(this));
@@ -154,7 +157,7 @@ exports['default'] = _react2['default'].createClass({
             addForm = _react2['default'].createElement(
                 _commonsLayout.Row,
                 null,
-                _react2['default'].createElement(_ticketsTicketAddForm2['default'], { close: this.closeAddForm, token: this.props.token, addNewRecord: this.addNewRecord }),
+                _react2['default'].createElement(_ticketsTicketAddForm2['default'], { close: this.closeAddForm, addNewRecord: this.addNewRecord }),
                 _react2['default'].createElement('hr', null)
             );
         }
@@ -184,7 +187,7 @@ exports['default'] = _react2['default'].createClass({
             _react2['default'].createElement(
                 _commonsLayout.Row,
                 null,
-                _react2['default'].createElement(_commonsDataTable2['default'], { data: this.state.data, option: this.props.option, token: this.props.token })
+                _react2['default'].createElement(_commonsDataTable2['default'], { data: this.state.data, option: this.props.option })
             )
         );
     }
@@ -254,7 +257,7 @@ exports['default'] = _react2['default'].createClass({
                 _utilsCache2['default'].set('token', data.token);
                 _utilsCache2['default'].set('card_selected', data.cards[0]);
             }
-            _this.props.loginSuccess(data.token);
+            _this.props.loginSuccess();
         }).bind(this)).fail((function () {
 
             _this.setState((0, _reactAddonsUpdate2['default'])(_this.state, {
@@ -863,7 +866,7 @@ exports['default'] = _react2['default'].createClass({
     save: function save() {
         var _this = this;
 
-        _dispatchersDispatcher2['default'].addLegalPerson(this.state, this.props.token).done((function (legalPerson) {
+        _dispatchersDispatcher2['default'].addLegalPerson(this.state).done((function (legalPerson) {
             _this.props.addLegalPerson(legalPerson);
         }).bind(this)).fail((function () {
             //error
@@ -970,7 +973,7 @@ exports['default'] = _react2['default'].createClass({
 
     loadLegalPersons: function loadLegalPersons() {
 
-        _dispatchersDispatcher2['default'].getData(_configConstants2['default'].options.legalPersons, this.props.token).done((function (data) {
+        _dispatchersDispatcher2['default'].getData(_configConstants2['default'].options.legalPersons).done((function (data) {
             this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
                 legalPersons: { $set: data || [] }
             }));
@@ -979,7 +982,7 @@ exports['default'] = _react2['default'].createClass({
 
     loadCategories: function loadCategories() {
 
-        _dispatchersDispatcher2['default'].getData(_configConstants2['default'].options.categories, this.props.token).done((function (data) {
+        _dispatchersDispatcher2['default'].getData(_configConstants2['default'].options.categories).done((function (data) {
             this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
                 categories: { $set: data || [] }
             }));
@@ -1016,7 +1019,7 @@ exports['default'] = _react2['default'].createClass({
     save: function save() {
         var _this = this;
 
-        _dispatchersDispatcher2['default'].addTicket(this.state.ticket, this.props.token).done((function (ticket) {
+        _dispatchersDispatcher2['default'].addTicket(this.state.ticket).done((function (ticket) {
             _this.setState(_this.getInitialState());
             _this.props.addNewRecord(ticket);
         }).bind(this)).fail((function () {
@@ -1040,7 +1043,7 @@ exports['default'] = _react2['default'].createClass({
             legalPersonForm = _react2['default'].createElement(
                 _commonsLayout.FormGroup,
                 null,
-                _react2['default'].createElement(_legalPersonsLegalPersonAddForm2['default'], { token: this.props.token, addLegalPerson: this.addLegalPerson }),
+                _react2['default'].createElement(_legalPersonsLegalPersonAddForm2['default'], { addLegalPerson: this.addLegalPerson }),
                 _react2['default'].createElement('hr', null)
             );
         }
@@ -1224,8 +1227,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 var _configConstants = require('../config/constants');
 
-var _configConstants2 = _interopRequireDefault(_configConstants);
-
 var _utilsCache = require('../utils/cache');
 
 var _utilsCache2 = _interopRequireDefault(_utilsCache);
@@ -1234,13 +1235,13 @@ var $ = require('jquery');
 exports['default'] = {
 
     login: function login(credentials) {
-        return $.post(_configConstants2['default'].api.auth, credentials);
+        return $.post(_configConstants.Api.auth, credentials);
     },
 
-    getData: function getData(ref, token) {
-        debugger;
-        var url = _configConstants2['default'].api[ref];
+    getData: function getData(ref) {
+        var url = _configConstants.Api[ref];
         var card = _utilsCache2['default'].get('card_selected');
+        var token = _utilsCache2['default'].get('token');
 
         return $.ajax({
             type: 'GET',
@@ -1252,7 +1253,9 @@ exports['default'] = {
         });
     },
 
-    addData: function addData(url, data, token) {
+    addData: function addData(url, data) {
+        var token = _utilsCache2['default'].get('token');
+
         return $.ajax({
             type: 'POST',
             url: url,
@@ -1263,11 +1266,11 @@ exports['default'] = {
             }).bind(this)
         });
     },
-    addLegalPerson: function addLegalPerson(legalPerson, token) {
-        return this.addData(_configConstants2['default'].api.legalPersons, legalPerson, token);
+    addLegalPerson: function addLegalPerson(legalPerson) {
+        return this.addData(_configConstants.Api.legalPersons, legalPerson);
     },
-    addTicket: function addTicket(ticket, token) {
-        return this.addData(_configConstants2['default'].api.tickets, ticket, token);
+    addTicket: function addTicket(ticket) {
+        return this.addData(_configConstants.Api.tickets, ticket);
     }
 };
 module.exports = exports['default'];

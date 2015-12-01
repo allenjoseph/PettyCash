@@ -17,7 +17,7 @@ let Body = React.createClass({
         };
     },
 
-    loginSuccess(){
+    loginSuccess() {
         
         this.setState(update(this.state, {
             option: {$set: Constants.options.tickets},
@@ -26,7 +26,7 @@ let Body = React.createClass({
         
     },
 
-    render(){
+    render() {
         if(Cache.get('token')){
             return (
                 <div>

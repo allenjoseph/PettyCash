@@ -15,7 +15,7 @@ export default React.createClass({
         };
     },
 
-    changeUsername(e){
+    changeUsername(e) {
         
         this.setState(update(this.state, {
             credentials: { username: {$set : e.target.value} }
@@ -23,7 +23,7 @@ export default React.createClass({
         
     },
 
-    changePassword(e){
+    changePassword(e) {
         
         this.setState(update(this.state, {
             credentials: { password: {$set : e.target.value} }
@@ -31,10 +31,10 @@ export default React.createClass({
         
     },
 
-    logIn(){
+    logIn() {
         
         Dispatcher.login(this.state.credentials)
-        .done((data)=>{
+        .done((data) => {
             
             if(data.token){
                 Cache.set('token', data.token);
@@ -43,7 +43,7 @@ export default React.createClass({
             this.props.loginSuccess();
             
         }.bind(this))
-        .fail(()=>{
+        .fail(() => {
             
             this.setState(update(this.state, {
                 error: {$set: true}
@@ -52,7 +52,7 @@ export default React.createClass({
         }.bind(this));
     },
 
-    render(){
+    render() {
         let AlertError,
             disableLogIn = !this.state.credentials.username || !this.state.credentials.password;
 

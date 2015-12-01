@@ -8,7 +8,7 @@ export default React.createClass({
             expenses: true
         };
     },
-    render(){
+    render() {
         return(
             <NavBar>
                 <NavBarHeader>

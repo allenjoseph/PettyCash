@@ -7,7 +7,7 @@ import update from 'react-addons-update';
 
 export default React.createClass({
 
-    getInitialState: function() {
+    getInitialState() {
         return {
             showAddForm: false,
             data: []
@@ -18,7 +18,7 @@ export default React.createClass({
         this.loadData();
     },
 
-    openAddForm(){
+    openAddForm() {
         this.setState({
             showAddForm: true
         });
@@ -30,11 +30,11 @@ export default React.createClass({
         });
     },
 
-    loadData(){
+    loadData() {
 
         Dispatcher.getData(this.props.option)
         
-        .done(function(data){
+        .done((data) => {
             
             this.setState(update(this.state, {
                 data: {$set: data}
@@ -42,12 +42,12 @@ export default React.createClass({
 
         }.bind(this))
 
-        .fail(function(){
+        .fail(() => {
 
         }.bind(this));
     },
     
-    addNewRecord(record){
+    addNewRecord(record) {
         
         this.setState(update(this.state, {
             showAddForm: {$set: false},
@@ -55,7 +55,7 @@ export default React.createClass({
         }));
     },
 
-    render(){
+    render() {
         let addForm;
 
         if(this.state.showAddForm){

@@ -1,15 +1,15 @@
 var $ = require('jquery');
-import Constants from '../config/constants';
+import { Api } from '../config/constants';
 import Cache from '../utils/cache';
 
 export default {
 
     login(credentials){
-        return $.post(Constants.api.auth, credentials);
+        return $.post(Api.auth, credentials);
     },
 
     getData(ref){
-        var url = Constants.api[ref];
+        var url = Api[ref];
         var card = Cache.get('card_selected');
         var token = Cache.get('token');
         
@@ -17,7 +17,7 @@ export default {
             type: 'GET',
             url: url + '?card=' + card.id + '&format=json',
             
-            beforeSend: function(xhr) {
+            beforeSend: (xhr) => {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
             }.bind(this),
         });
@@ -31,15 +31,15 @@ export default {
             url: url,
             data: data,
             
-            beforeSend: function(xhr) {
+            beforeSend: (xhr) => {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
             }.bind(this),
         });
     },
     addLegalPerson(legalPerson){
-        return this.addData(Constants.api.legalPersons, legalPerson);
+        return this.addData(Api.legalPersons, legalPerson);
     },
     addTicket(ticket){
-        return this.addData(Constants.api.tickets, ticket);
+        return this.addData(Api.tickets, ticket);
     }
 };
