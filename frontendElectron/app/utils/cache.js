@@ -2,11 +2,7 @@ var store = {};
 
 export default {
 
-    get: (key) => {
-        return store[key];
-    },
+    get: (key) => store[key],
     
-    set: (key, value) => {
-        store[key] = value;
-    }
+    set: (key, value) => store[key] = value
 };

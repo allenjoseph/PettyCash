@@ -1,4 +1,14 @@
+let root = 'http://localhost:8000';
+
+export let api = {
+    auth: root + '/api-token-auth/',
+    expenses: root + '/expenses/',
+    legalPersons: root + '/legalpersons/',
+    categories: root + '/categories/'
+};
+
 export default {
+    api: api,
     options: {
         tickets: 'tickets',
         legalPersons: 'legalPersons',
@@ -10,12 +20,6 @@ export default {
         tickets: 'Gastos',
         stadistics: 'Estadisticas',
         ruc: 'Consulta RUC'
-    },
-    api: {
-        auth: 'http://localhost:8000/api-token-auth/',
-        tickets: 'http://localhost:8000/expenses/',
-        legalPersons: 'http://localhost:8000/legalpersons/',
-        categories: 'http://localhost:8000/categories/'
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',

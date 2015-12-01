@@ -1,29 +1,34 @@
 var $ = require('jquery');
-import { Api } from '../config/constants';
+import { api } from '../config/constants';
 import Cache from '../utils/cache';
 
 export default {
 
     login(credentials){
-        return $.post(Api.auth, credentials);
+        return $.post(api.auth, credentials);
     },
 
-    getData(ref){
-        var url = Api[ref];
-        var card = Cache.get('card_selected');
+    getData(url){
+        
         var token = Cache.get('token');
+        var card = Cache.get('card_selected');
+        
+        if(card && card.id){
+            url += '?card=' + card.id;
+        }
         
         return $.ajax({
             type: 'GET',
-            url: url + '?card=' + card.id + '&format=json',
+            url: url + '&format=json',
             
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
-            }.bind(this),
+            },
         });
     },
 
-    addData(url, data){
+    postData(url, data){
+        
         var token = Cache.get('token');
         
         return $.ajax({
@@ -33,13 +38,7 @@ export default {
             
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('Authorization', 'JWT ' + token);
-            }.bind(this),
+            },
         });
-    },
-    addLegalPerson(legalPerson){
-        return this.addData(Api.legalPersons, legalPerson);
-    },
-    addTicket(ticket){
-        return this.addData(Api.tickets, ticket);
     }
 };
