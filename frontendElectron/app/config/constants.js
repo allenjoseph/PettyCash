@@ -10,14 +10,14 @@ export let api = {
 export default {
     api: api,
     options: {
-        tickets: 'tickets',
+        expenses: 'expenses',
         legalPersons: 'legalPersons',
         categories: 'categories',
         stadistics: 'stadistics',
         ruc: 'ruc'
     },
     titles:{
-        tickets: 'Gastos',
+        expenses: 'Gastos',
         stadistics: 'Estadisticas',
         ruc: 'Consulta RUC'
     },
@@ -48,7 +48,7 @@ export default {
         }
     },
     dataTableColumns : {
-        tickets: {
+        expenses: {
             created_date: 'Fecha',
             number: 'Codigo',
             description: 'Descripcion',

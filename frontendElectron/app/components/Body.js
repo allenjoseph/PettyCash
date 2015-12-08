@@ -4,7 +4,6 @@ import Login from './Login';
 import Nav from './Nav';
 import Content from './Content';
 import update from 'react-addons-update';
-import Dispatcher from '../dispatchers/dispatcher';
 import Constants from '../config/constants';
 import Cache from '../utils/cache';
 
@@ -20,8 +19,8 @@ let Body = React.createClass({
     loginSuccess() {
         
         this.setState(update(this.state, {
-            option: {$set: Constants.options.tickets},
-            title: {$set: Constants.titles.tickets}
+            option: {$set: Constants.options.expenses},
+            title: {$set: Constants.titles.expenses}
         }));
         
     },

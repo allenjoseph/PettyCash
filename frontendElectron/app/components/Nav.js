@@ -18,9 +18,9 @@ export default React.createClass({
 
                 <NavBarCollapse>
                     <NavBarContent>
-                        <li className={this.props.option === Constants.options.tickets ? 'active' : ''}>
+                        <li className={this.props.option === Constants.options.expenses ? 'active' : ''}>
                             <a href="javascript:void(0)">
-                                <i className="fa fa-usd fa-fw"></i> {Constants.titles.tickets}
+                                <i className="fa fa-usd fa-fw"></i> {Constants.titles.expenses}
                             </a>
                         </li>
                         <li className={this.props.option === Constants.options.stadistics ? 'active' : ''}>

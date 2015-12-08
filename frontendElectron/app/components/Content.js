@@ -1,8 +1,8 @@
 import React from 'react';
 import DataTable from './commons/DataTable';
-import TicketAddForm from './tickets/TicketAddForm';
+import ExpenseAddForm from './expenses/ExpenseAddForm';
 import { Container, PageHeader, Row } from './commons/Layout';
-import Dispatcher from '../dispatchers/dispatcher';
+import ExpenseStore from '../stores/expense';
 import update from 'react-addons-update';
 
 export default React.createClass({
@@ -15,7 +15,9 @@ export default React.createClass({
     },
 
     componentDidMount() {
-        this.loadData();
+        this.setState(update(this.state, {
+            data: {$set: ExpenseStore.getAll()}
+        }));
     },
 
     openAddForm() {
@@ -30,23 +32,6 @@ export default React.createClass({
         });
     },
 
-    loadData() {
-
-        Dispatcher.getData(this.props.option)
-        
-        .done((data) => {
-            
-            this.setState(update(this.state, {
-                data: {$set: data}
-            }));
-
-        }.bind(this))
-
-        .fail(() => {
-
-        }.bind(this));
-    },
-    
     addNewRecord(record) {
         
         this.setState(update(this.state, {
@@ -60,7 +45,7 @@ export default React.createClass({
 
         if(this.state.showAddForm){
             addForm = <Row>
-                        <TicketAddForm close={this.closeAddForm} addNewRecord={this.addNewRecord}/>
+                        <ExpenseAddForm close={this.closeAddForm} addNewRecord={this.addNewRecord}/>
                         <hr/>
                     </Row>;
         }
