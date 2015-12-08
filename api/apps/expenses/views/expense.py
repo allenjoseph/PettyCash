@@ -1,10 +1,10 @@
 from rest_framework import viewsets
-from models.legalPerson import LegalPerson
-from models.expense import Expense
-from models.category import Category
-from serializers.legalPerson import LegalPersonSerializer
-from serializers.category import CategorySerializer
-from serializers.expense import ExpenseSerializer
+from ..models.legalPerson import LegalPerson
+from ..models.expense import Expense
+from ..models.category import Category
+from ..serializers.legalPerson import LegalPersonSerializer
+from ..serializers.category import CategorySerializer
+from ..serializers.expense import ExpenseSerializer
 
 
 class LegalPersonViewSet(viewsets.ModelViewSet):

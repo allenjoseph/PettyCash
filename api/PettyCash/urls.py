@@ -16,14 +16,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework import routers
-from apps.expenses import views
+from apps.expenses.views.expense import LegalPersonViewSet
+from apps.expenses.views.expense import ExpenseViewSet
+from apps.expenses.views.expense import CategoryViewSet
+from apps.expenses.views.installment import CardViewSet
+from apps.expenses.views.installment import InstallmentViewSet
 
 router = routers.SimpleRouter()
-router.register(r'legalpersons', views.LegalPersonViewSet)
-router.register(r'expenses', views.ExpenseViewSet)
-router.register(r'categories', views.CategoryViewSet)
-router.register(r'cards', views.CardViewSet)
-router.register(r'installments', views.InstallmentViewSet)
+router.register(r'legalpersons', LegalPersonViewSet)
+router.register(r'expenses', ExpenseViewSet)
+router.register(r'categories', CategoryViewSet)
+router.register(r'cards', CardViewSet)
+router.register(r'installments', InstallmentViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

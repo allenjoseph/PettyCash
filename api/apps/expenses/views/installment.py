@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from models.card import Card
-from models.installment import Installment
-from serializers.card import CardSerializer
-from serializers.installment import InstallmentSerializer
+from ..models.card import Card
+from ..models.installment import Installment
+from ..serializers.card import CardSerializer
+from ..serializers.installment import InstallmentSerializer
 from datetime import datetime
 
 

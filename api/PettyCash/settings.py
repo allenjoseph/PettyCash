@@ -119,5 +119,5 @@ REST_FRAMEWORK = {
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'apps.expenses.views.jwt_response_payload_handler',
+    'apps.expenses.handlers.jwt_response_payload_handler',
 }
