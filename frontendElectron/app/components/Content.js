@@ -3,6 +3,7 @@ import DataTable from './commons/DataTable';
 import ExpenseAddForm from './expenses/ExpenseAddForm';
 import { Container, PageHeader, Row } from './commons/Layout';
 import ExpenseStore from '../stores/expense';
+import ExpenseActions from '../actions/expense';
 import update from 'react-addons-update';
 
 export default React.createClass({
@@ -15,9 +16,13 @@ export default React.createClass({
     },
 
     componentDidMount() {
-        this.setState(update(this.state, {
-            data: {$set: ExpenseStore.getAll()}
-        }));
+        var action = ExpenseActions.getAll();
+        
+        action.done((data) => {
+            this.setState(update(this.state, {
+                data: {$set: ExpenseStore.getAll()}
+            }));
+        }.bind(this));
     },
 
     openAddForm() {
@@ -32,11 +37,10 @@ export default React.createClass({
         });
     },
 
-    addNewRecord(record) {
+    updateData() {
         
         this.setState(update(this.state, {
-            showAddForm: {$set: false},
-            data: {$push: [record]}
+            data: {$set: ExpenseStore.getAll()}
         }));
     },
 

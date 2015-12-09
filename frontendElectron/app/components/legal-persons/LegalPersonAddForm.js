@@ -19,13 +19,13 @@ export default React.createClass({
     },
 
     save(){
-        Dispatcher.addLegalPerson(this.state)
+        /*Dispatcher.addLegalPerson(this.state)
         .done((legalPerson)=>{
             this.props.addLegalPerson(legalPerson);
         }.bind(this))
         .fail(()=>{
             //error
-        }.bind(this));
+        }.bind(this));*/
     },
 
     render(){

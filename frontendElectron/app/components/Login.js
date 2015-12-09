@@ -3,6 +3,7 @@ import update from 'react-addons-update';
 import Dispatcher from '../dispatchers/dispatcher';
 import { Container, PageHeader, Row, Well, Form, FormGroup } from './commons/Layout';
 import Cache from '../utils/cache';
+import GeneralActions from '../actions/general';
 
 export default React.createClass({
     getInitialState() {
@@ -33,17 +34,15 @@ export default React.createClass({
 
     logIn() {
         
-        Dispatcher.login(this.state.credentials)
-        .done((data) => {
-            
-            if(data.token){
-                Cache.set('token', data.token);
-                Cache.set('card_selected', data.cards[0]);
-            }
+        var action = GeneralActions.login(this.state.credentials);
+        
+        action.done((data) => {
+        
             this.props.loginSuccess();
             
-        }.bind(this))
-        .fail(() => {
+        }.bind(this));
+        
+        action.fail(() => {
             
             this.setState(update(this.state, {
                 error: {$set: true}

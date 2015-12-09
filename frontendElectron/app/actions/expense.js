@@ -1,10 +1,10 @@
 import ExpenseDispatcher from '../dispatchers/expense';
 
-var ExpenseAction = {
+let ExpenseActions = {
     
     getAll: () => ExpenseDispatcher.getAll(),
     
     add: (expense) =>  ExpenseDispatcher.create(expense)
 };
 
-export default ExpenseAction;
+export default ExpenseActions;

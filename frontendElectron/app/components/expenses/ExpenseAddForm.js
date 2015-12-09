@@ -2,7 +2,7 @@ import React from 'react';
 import Select from '../commons/Select';
 import LegalPersonAddForm from '../legal-persons/LegalPersonAddForm';
 import update from 'react-addons-update';
-import Dispatcher from '../../dispatchers/expense';
+import ExpenseActions from '../../actions/expense';
 import Constants from '../../config/constants';
 import { Form, FormGroup } from '../commons/Layout';
 
@@ -30,22 +30,22 @@ export default React.createClass({
 
     loadLegalPersons(){
 
-        Dispatcher.getData(Constants.options.legalPersons)
+        /*ExpenseDispatcher.getData(Constants.options.legalPersons)
         .done(function(data){
             this.setState(update(this.state, {
                legalPersons: {$set: data || []}
             }));
-        }.bind(this));
+        }.bind(this));*/
     },
 
     loadCategories(){
 
-        Dispatcher.getData(Constants.options.categories)
+        /*ExpenseDispatcher.getData(Constants.options.categories)
         .done(function(data){
             this.setState(update(this.state, {
                categories: {$set: data || []}
             }));
-        }.bind(this));
+        }.bind(this));*/
     },
 
     updateValue(e){
@@ -76,13 +76,11 @@ export default React.createClass({
     },
 
     save(){
-        Dispatcher.create(this.state.expense)
-        .done((expense)=>{
+        var action = ExpenseActions.create(this.state.expense)
+        
+        action.done(() => {
             this.setState(this.getInitialState());
-            this.props.addNewRecord(expense);
-        }.bind(this))
-        .fail(()=>{
-            //..
+            this.props.updateData();
         }.bind(this));
     },
 

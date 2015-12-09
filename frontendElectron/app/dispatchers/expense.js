@@ -3,31 +3,29 @@ import { api } from '../config/constants';
 import Cache from '../utils/cache';
 import ExpenseStore from '../stores/expense'
 
-let Expense = {
+let ExpenseDispatcher = {
 
     getAll: () => {
 
         var params = {
             card: Cache.get('card_selected')
         };
-
-        var xhr = xHttpRequest(api.expenses, params);
-
-        xhr.done((data) => {
+        
+        success(data) => {
             data.map((expense) => ExpenseStore.create(expense));
-        });
+        }
 
-        xhr.fail(()=> console.error('request fail'));
+        return xHttpRequest('GET', [api.expenses, null, params], [success]);
     },
 
     create: (expense) => {
+        
+        success(data) => {
+            ExpenseStore.create(data)
+        }
 
-        var xhr = xHttpRequest('POST', api.expenses, null, expense);
-
-        xhr.done((expense) => ExpenseStore.create(expense));
-
-        xhr.fail(()=> console.error('request fail'));
+        return xHttpRequest('POST', [api.expenses, expense], [success]);
     }
 };
 
-export default Expense;
+export default ExpenseDispatcher;

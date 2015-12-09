@@ -8,7 +8,6 @@ export let api = {
 };
 
 export default {
-    api: api,
     options: {
         expenses: 'expenses',
         legalPersons: 'legalPersons',
