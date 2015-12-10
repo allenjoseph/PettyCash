@@ -11,14 +11,15 @@ export default React.createClass({
     getInitialState() {
         return {
             showAddForm: false,
-            data: []
+            data: {}
         };
     },
 
     componentDidMount() {
         var action = ExpenseActions.getAll();
         
-        action.done((data) => {
+        action.done(() => {
+            debugger;
             this.setState(update(this.state, {
                 data: {$set: ExpenseStore.getAll()}
             }));

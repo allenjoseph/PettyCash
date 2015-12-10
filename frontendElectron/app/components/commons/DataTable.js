@@ -23,6 +23,7 @@ export default React.createClass({
 
         let columnsKeys = [],
             columnsNames = [],
+            rowsValues = [],
             columns = Constants.dataTableColumns[this.props.option];
 
         for(var key in columns){
@@ -33,18 +34,24 @@ export default React.createClass({
             }
         }
 
-        let rowsValues = this.props.data.map(function(elem){
+        for(var key in this.props.data){
+            if(this.props.data.hasOwnProperty(key)){
 
-            let dataColumns = columnsKeys.map(function(key){
-                let value = elem[key];
-                if(key === 'created_date'){
-                    value = Moment(value).format('DD/MM/YYYY');
-                }
-                return <td key={key}>{value}</td>;
-            });
+                let dataColumns = columnsKeys.map((columnKey) => {
+                    
+                    let value = (this.props.data[key])[columnKey];
+                    
+                    if(columnKey === 'created_date'){
+                        value = Moment(value).format('DD/MM/YYYY');
+                    }
+                    
+                    return <td key={columnKey}>{value}</td>;
+                }.bind(this));
 
-            return <tr key={elem.id} style={{cursor:'pointer'}}>{dataColumns}</tr>;
-        });
+                rowsValues.push(
+                    <tr key={this.props.data[key].id} style={{cursor:'pointer'}}>{dataColumns}</tr>);
+            }
+        }
 
         return(
             <table ref="dataTable" className="table table-striped table-bordered table-hover">

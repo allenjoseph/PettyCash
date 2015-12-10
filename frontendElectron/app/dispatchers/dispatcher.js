@@ -29,7 +29,7 @@ export function xHttpRequest (type, dataRequest, callbacks){
         
         error: (xhr, status) => {
             
-            console.error(status);
+            console.error(xhr.statusText);
             
             if(typeof callbacks[1] === 'function'){
                 callbacks[1]();

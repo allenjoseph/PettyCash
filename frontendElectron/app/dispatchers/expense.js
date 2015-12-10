@@ -7,11 +7,13 @@ let ExpenseDispatcher = {
 
     getAll: () => {
 
-        var params = {
-            card: Cache.get('card_selected')
+        let cardSelected = Cache.get('card_selected');
+
+        let params = {
+            card: cardSelected.id
         };
         
-        success(data) => {
+        let success = (data) => {
             data.map((expense) => ExpenseStore.create(expense));
         }
 
@@ -20,7 +22,7 @@ let ExpenseDispatcher = {
 
     create: (expense) => {
         
-        success(data) => {
+        let success = (data) => {
             ExpenseStore.create(data)
         }
 

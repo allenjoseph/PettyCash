@@ -6,7 +6,7 @@ let GeneralDispatcher = {
     
     login: (credentials) => {
         
-        success(data) => {
+        let success = (data) => {
             if(data.token){
                 Cache.set('token', data.token);
                 Cache.set('card_selected', data.cards[0]);
