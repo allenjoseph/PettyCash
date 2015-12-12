@@ -813,6 +813,10 @@ var FormGroup = _react2['default'].createClass({
             colSize = 'col-sm-12';
         }
 
+        if (this.props.size) {
+            colSize = 'col-sm-' + this.props.size;
+        }
+
         return _react2['default'].createElement(
             'div',
             { className: 'form-group' },
@@ -841,46 +845,46 @@ var Well = _react2['default'].createClass({
 exports.Well = Well;
 
 },{"react":181}],9:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-exports["default"] = _react2["default"].createClass({
-    displayName: "Select",
+exports['default'] = _react2['default'].createClass({
+    displayName: 'Select',
 
     render: function render() {
         var data = this.props.data || [];
 
         var options = data.map(function (option) {
-            return _react2["default"].createElement(
-                "option",
-                { key: option.id, value: option.id },
-                option.name
+            return _react2['default'].createElement(
+                'option',
+                { key: option['id'], value: option['id'] },
+                option['name']
             );
         });
 
-        return _react2["default"].createElement(
-            "select",
+        return _react2['default'].createElement(
+            'select',
             { className: this.props.style, onChange: this.props.onChange,
                 disabled: this.props.disabled, value: this.props.value, name: this.props.name },
-            _react2["default"].createElement(
-                "option",
-                { value: "" },
+            this.props.value ? '' : _react2['default'].createElement(
+                'option',
+                { value: '' },
                 this.props.placeholder
             ),
             options
         );
     }
 });
-module.exports = exports["default"];
+module.exports = exports['default'];
 
 },{"react":181}],10:[function(require,module,exports){
 'use strict';
@@ -923,15 +927,25 @@ exports['default'] = _react2['default'].createClass({
     getInitialState: function getInitialState() {
         return {
             expense: {
-                number: '',
+                date: new Date(),
                 description: '',
-                legal_person: '',
-                total_price: '',
-                category: ''
+                total_price: 0,
+                category: null,
+                number: '',
+                legal_person: null,
+                repeat: false,
+                currency: 'PEN',
+                exchange: 0,
+                card: '',
+                installments: 1
             },
             showLegalPerson: false,
             legalPersons: [],
-            categories: []
+            categories: [],
+            installmentsRange: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (elem) {
+                return { id: elem + 1, name: elem + 1 };
+            }),
+            currencies: [{ id: 'PEN', name: 'Nuevo Sol' }, { id: 'USD', name: 'Dolar Estadounidense' }, { id: 'EUR', name: 'Euro' }]
         };
     },
 
@@ -960,7 +974,15 @@ exports['default'] = _react2['default'].createClass({
         }.bind(this));*/
     },
 
-    updateValue: function updateValue(e) {
+    updateStateValue: function updateStateValue(e) {
+        debugger;
+        var newState = {};
+        newState[e.target.name] = { $set: e.target.value };
+
+        this.setState((0, _reactAddonsUpdate2['default'])(this.state, newState));
+    },
+
+    updateExpenseValue: function updateExpenseValue(e) {
         var newState = { expense: {} };
         newState.expense[e.target.name] = { $set: e.target.value };
 
@@ -1001,6 +1023,7 @@ exports['default'] = _react2['default'].createClass({
     render: function render() {
         var legalPersonForm = undefined,
             showLegalPersonButton = undefined;
+        var isBill = false;
 
         if (this.state.showLegalPerson) {
 
@@ -1031,7 +1054,7 @@ exports['default'] = _react2['default'].createClass({
                     _react2['default'].createElement(
                         'h3',
                         { style: { marginTop: 0 } },
-                        'FACTURA / BOLETA / RECIBO',
+                        'GASTO',
                         _react2['default'].createElement(
                             'a',
                             { href: 'javascript:void(0)', className: 'btn btn-link pull-right', onClick: this.props.close },
@@ -1039,7 +1062,7 @@ exports['default'] = _react2['default'].createClass({
                         )
                     )
                 ),
-                _react2['default'].createElement(
+                !isBill ? '' : _react2['default'].createElement(
                     'div',
                     { className: 'form-group' },
                     _react2['default'].createElement(
@@ -1051,7 +1074,7 @@ exports['default'] = _react2['default'].createClass({
                         'div',
                         { className: 'col-sm-4' },
                         _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: 'Codigo recibo',
-                            name: 'number', value: this.state.expense.number, onChange: this.updateValue,
+                            name: 'number', value: this.state.expense.number, onChange: this.updateExpenseValue,
                             disabled: this.state.showLegalPerson })
                     )
                 ),
@@ -1059,14 +1082,14 @@ exports['default'] = _react2['default'].createClass({
                     _commonsLayout.FormGroup,
                     { label: 'Descripcion' },
                     _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: 'Descripcion',
-                        name: 'description', value: this.state.expense.description, onChange: this.updateValue,
+                        name: 'description', value: this.state.expense.description, onChange: this.updateExpenseValue,
                         disabled: this.state.showLegalPerson })
                 ),
-                _react2['default'].createElement(
+                !isBill ? '' : _react2['default'].createElement(
                     _commonsLayout.FormGroup,
                     { label: 'Proveedor' },
                     _react2['default'].createElement(_commonsSelect2['default'], { placeholder: 'Seleccione un Proveedor', style: 'form-control',
-                        name: 'legal_person', value: this.state.expense.legal_person, onChange: this.updateValue,
+                        name: 'legal_person', value: this.state.expense.legal_person, onChange: this.updateExpenseValue,
                         data: this.state.legalPersons, disabled: this.state.showLegalPerson }),
                     _react2['default'].createElement(
                         'a',
@@ -1076,21 +1099,25 @@ exports['default'] = _react2['default'].createClass({
                     ),
                     showLegalPersonButton
                 ),
-                legalPersonForm,
+                !isBill ? '' : legalPersonForm,
                 _react2['default'].createElement(
                     'div',
                     { className: 'form-group' },
-                    _react2['default'].createElement(
-                        'label',
-                        { className: 'col-sm-2 control-label' },
-                        'Categoria'
-                    ),
-                    _react2['default'].createElement(
+                    !isBill ? '' : _react2['default'].createElement(
                         'div',
-                        { className: 'col-sm-4' },
-                        _react2['default'].createElement(_commonsSelect2['default'], { placeholder: 'Sin categorizar', style: 'form-control',
-                            name: 'category', value: this.state.expense.category, onChange: this.updateValue,
-                            data: this.state.categories, disabled: this.state.showLegalPerson })
+                        null,
+                        _react2['default'].createElement(
+                            'label',
+                            { className: 'col-sm-2 control-label' },
+                            'Categoria'
+                        ),
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'col-sm-4' },
+                            _react2['default'].createElement(_commonsSelect2['default'], { placeholder: 'Sin categorizar', style: 'form-control',
+                                name: 'category', value: this.state.expense.category, onChange: this.updateExpenseValue,
+                                data: this.state.categories, disabled: this.state.showLegalPerson })
+                        )
                     ),
                     _react2['default'].createElement(
                         'label',
@@ -1105,9 +1132,47 @@ exports['default'] = _react2['default'].createClass({
                         'div',
                         { className: 'col-sm-4' },
                         _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: 'Precio Total',
-                            name: 'total_price', value: this.state.expense.total_price, onChange: this.updateValue,
+                            name: 'total_price', value: this.state.expense.total_price, onChange: this.updateExpenseValue,
                             disabled: this.state.showLegalPerson })
                     )
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2['default'].createElement(
+                        'label',
+                        { className: 'col-sm-2 control-label' },
+                        'Moneda'
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-sm-4' },
+                        _react2['default'].createElement(_commonsSelect2['default'], { style: 'form-control', name: 'currency',
+                            value: this.state.expense.currency, onChange: this.updateExpenseValue,
+                            data: this.state.currencies, disabled: this.state.showLegalPerson })
+                    ),
+                    _react2['default'].createElement(
+                        'label',
+                        { className: 'col-sm-2 control-label' },
+                        _react2['default'].createElement(
+                            'strong',
+                            null,
+                            'Cambio'
+                        )
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-sm-4' },
+                        _react2['default'].createElement('input', { type: 'text', name: 'exchange', value: this.state.expense.exchange,
+                            onChange: this.updateExpenseValue })
+                    )
+                ),
+                _react2['default'].createElement(
+                    _commonsLayout.FormGroup,
+                    { label: 'Cuotas', size: '4' },
+                    _react2['default'].createElement(_commonsSelect2['default'], { style: 'form-control', name: 'installments',
+                        value: this.state.expense.installments, onChange: this.updateExpenseValue,
+                        data: this.state.installmentsRange, disabled: this.state.showLegalPerson })
                 ),
                 _react2['default'].createElement(
                     _commonsLayout.FormGroup,

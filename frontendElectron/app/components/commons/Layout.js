@@ -125,6 +125,10 @@ export let FormGroup = React.createClass({
         }else{
             colSize = 'col-sm-12';
         }
+
+        if(this.props.size){
+            colSize = 'col-sm-' + this.props.size;
+        }
         
         return (
             <div className="form-group">

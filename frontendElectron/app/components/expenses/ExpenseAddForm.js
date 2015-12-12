@@ -11,15 +11,29 @@ export default React.createClass({
     getInitialState() {
         return {
             expense : {
-                number: '',
+                date: new Date(),
                 description: '',
-                legal_person: '',
-                total_price: '',
-                category: ''
+                total_price: 0,
+                category: null,
+                number: '',
+                legal_person: null,
+                repeat: false,
+                currency: 'PEN',
+                exchange: 0,
+                card: '',
+                installments: 1,
             },
             showLegalPerson: false,
             legalPersons: [],
-            categories: []
+            categories: [],
+            installmentsRange: [0,1,2,3,4,5,6,7,8,9].map(function(elem){
+                return { id: elem + 1, name: elem + 1 };
+            }),
+            currencies: [
+                {id: 'PEN', name: 'Nuevo Sol'},
+                {id: 'USD', name: 'Dolar Estadounidense'},
+                {id: 'EUR', name: 'Euro'}
+            ]
         };
     },
 
@@ -48,7 +62,15 @@ export default React.createClass({
         }.bind(this));*/
     },
 
-    updateValue(e){
+    updateStateValue(e){
+        debugger;
+        let newState = {};
+        newState[e.target.name] = { $set: e.target.value };
+
+        this.setState(update(this.state, newState));
+    },
+
+    updateExpenseValue(e){
         let newState = { expense : {} };
         newState.expense[e.target.name] = { $set: e.target.value };
 
@@ -86,6 +108,7 @@ export default React.createClass({
 
     render(){
         let legalPersonForm, showLegalPersonButton;
+        let isBill = false;
 
         if(this.state.showLegalPerson){
             
@@ -102,63 +125,95 @@ export default React.createClass({
             <div className="well">
                 <Form>
                     <FormGroup>
-                        <h3 style={{marginTop:0}}>FACTURA / BOLETA / RECIBO
+                        <h3 style={{marginTop:0}}>GASTO
                             <a href="javascript:void(0)" className="btn btn-link pull-right" onClick={this.props.close}>Cancelar y Cerrar</a>
                         </h3>
                     </FormGroup>
                     
-                    <div className="form-group">
-                        <label className="col-sm-2 control-label">Codigo recibo</label>
-                        <div className="col-sm-4">
-                            <input type="text" className="form-control" placeholder="Codigo recibo" 
-                            name="number" value={this.state.expense.number} onChange={this.updateValue}
-                            disabled={this.state.showLegalPerson}/>
+                    { !isBill ? '' : 
+                        <div className="form-group">
+                            <label className="col-sm-2 control-label">Codigo recibo</label>
+                            <div className="col-sm-4">
+                                <input type="text" className="form-control" placeholder="Codigo recibo" 
+                                name="number" value={this.state.expense.number} onChange={this.updateExpenseValue}
+                                disabled={this.state.showLegalPerson}/>
+                            </div>
                         </div>
-                    </div>
+                    }
                     
                     <FormGroup label="Descripcion">
                     
                         <input type="text" className="form-control" placeholder="Descripcion" 
-                        name="description" value={this.state.expense.description} onChange={this.updateValue}
+                        name="description" value={this.state.expense.description} onChange={this.updateExpenseValue}
                         disabled={this.state.showLegalPerson}/>
                         
                     </FormGroup>
                     
-                    <FormGroup label="Proveedor">
+                    { !isBill ? '' : 
+                        <FormGroup label="Proveedor">
 
-                            <Select placeholder="Seleccione un Proveedor" style="form-control" 
-                            name="legal_person" value={this.state.expense.legal_person} onChange={this.updateValue}
-                            data={this.state.legalPersons} disabled={this.state.showLegalPerson}/>
+                                <Select placeholder="Seleccione un Proveedor" style="form-control" 
+                                name="legal_person" value={this.state.expense.legal_person} onChange={this.updateExpenseValue}
+                                data={this.state.legalPersons} disabled={this.state.showLegalPerson}/>
 
-                            <a href="javascript:void(0)" className="btn btn-link" disabled={this.state.showLegalPerson}
-                            onClick={this.openAddLegalPerson}>Agregar Proveedor</a>
-                            
-                            {showLegalPersonButton}
-                            
-                    </FormGroup>
+                                <a href="javascript:void(0)" className="btn btn-link" disabled={this.state.showLegalPerson}
+                                onClick={this.openAddLegalPerson}>Agregar Proveedor</a>
+                                
+                                {showLegalPersonButton}
+                                
+                        </FormGroup>
+                    }
 
-                    {legalPersonForm}
+                    { !isBill ? '' : legalPersonForm }
                     
                     <div className="form-group">
 
-                        <label className="col-sm-2 control-label">Categoria</label>
-                        <div className="col-sm-4">
-                            <Select placeholder="Sin categorizar" style="form-control" 
-                            name="category" value={this.state.expense.category} onChange={this.updateValue}
-                            data={this.state.categories} disabled={this.state.showLegalPerson}/>
-                        </div>
+                        { !isBill ? '' : 
+                            <div>
+                                <label className="col-sm-2 control-label">Categoria</label>
+                                <div className="col-sm-4">
+                                    <Select placeholder="Sin categorizar" style="form-control" 
+                                    name="category" value={this.state.expense.category} onChange={this.updateExpenseValue}
+                                    data={this.state.categories} disabled={this.state.showLegalPerson}/>
+                                </div>
+                            </div>
+                        }
                         
                         <label className="col-sm-2 control-label">
                             <strong>Precio Total</strong>
                         </label>
                         <div className="col-sm-4">
                             <input type="text" className="form-control" placeholder="Precio Total" 
-                            name="total_price" value={this.state.expense.total_price} onChange={this.updateValue}
+                            name="total_price" value={this.state.expense.total_price} onChange={this.updateExpenseValue}
                             disabled={this.state.showLegalPerson}/>
                         </div>
                     
                     </div>
+
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Moneda</label>
+                        <div className="col-sm-4">
+                            <Select style="form-control" name="currency" 
+                            value={this.state.expense.currency} onChange={this.updateExpenseValue}
+                            data={this.state.currencies} disabled={this.state.showLegalPerson}/>
+                        </div>
+                        <label className="col-sm-2 control-label">
+                            <strong>Cambio</strong>
+                        </label>
+                        <div className="col-sm-4">
+                            <input type="text" name="exchange" value={this.state.expense.exchange}
+                            onChange={this.updateExpenseValue}/>
+                        </div>
+                    </div>
                     
+                    <FormGroup label="Cuotas" size="4">
+
+                        <Select style="form-control" name="installments" 
+                        value={this.state.expense.installments} onChange={this.updateExpenseValue}
+                        data={this.state.installmentsRange} disabled={this.state.showLegalPerson}/>
+                            
+                    </FormGroup>
+
                     <FormGroup label="">
                     
                         <button type="button" className="btn btn-primary pull-right" onClick={this.save}
