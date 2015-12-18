@@ -171,7 +171,6 @@ exports['default'] = _react2['default'].createClass({
         var action = _actionsExpense2['default'].getAll();
 
         action.done((function () {
-            debugger;
             _this.setState((0, _reactAddonsUpdate2['default'])(_this.state, {
                 data: { $set: _storesExpense2['default'].getAll() }
             }));
@@ -861,7 +860,12 @@ exports['default'] = _react2['default'].createClass({
     displayName: 'Select',
 
     render: function render() {
+
         var data = this.props.data || [];
+
+        if (this.props.placeholder) {
+            data.unshift({ id: '0', name: this.props.placeholder });
+        }
 
         var options = data.map(function (option) {
             return _react2['default'].createElement(
@@ -875,11 +879,6 @@ exports['default'] = _react2['default'].createClass({
             'select',
             { className: this.props.style, onChange: this.props.onChange,
                 disabled: this.props.disabled, value: this.props.value, name: this.props.name },
-            this.props.value ? '' : _react2['default'].createElement(
-                'option',
-                { value: '' },
-                this.props.placeholder
-            ),
             options
         );
     }
@@ -925,9 +924,12 @@ exports['default'] = _react2['default'].createClass({
     displayName: 'ExpenseAddForm',
 
     getInitialState: function getInitialState() {
+        var date = new Date();
+        var today = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+
         return {
             expense: {
-                date: new Date(),
+                date: today,
                 description: '',
                 total_price: 0,
                 category: null,
@@ -975,7 +977,6 @@ exports['default'] = _react2['default'].createClass({
     },
 
     updateStateValue: function updateStateValue(e) {
-        debugger;
         var newState = {};
         newState[e.target.name] = { $set: e.target.value };
 
@@ -1023,7 +1024,7 @@ exports['default'] = _react2['default'].createClass({
     render: function render() {
         var legalPersonForm = undefined,
             showLegalPersonButton = undefined;
-        var isBill = false;
+        var isBill = undefined;
 
         if (this.state.showLegalPerson) {
 
@@ -1041,7 +1042,7 @@ exports['default'] = _react2['default'].createClass({
                 _react2['default'].createElement('hr', null)
             );
         }
-
+        debugger;
         return _react2['default'].createElement(
             'div',
             { className: 'well' },
@@ -1062,7 +1063,7 @@ exports['default'] = _react2['default'].createClass({
                         )
                     )
                 ),
-                !isBill ? '' : _react2['default'].createElement(
+                isBill && _react2['default'].createElement(
                     'div',
                     { className: 'form-group' },
                     _react2['default'].createElement(
@@ -1080,12 +1081,19 @@ exports['default'] = _react2['default'].createClass({
                 ),
                 _react2['default'].createElement(
                     _commonsLayout.FormGroup,
-                    { label: 'Descripcion' },
+                    { label: 'Fecha' },
+                    _react2['default'].createElement('input', { type: 'date', className: 'form-control', placeholder: 'Fecha',
+                        name: 'date', value: this.state.expense.date, onChange: this.updateExpenseValue,
+                        disabled: this.state.showLegalPerson })
+                ),
+                _react2['default'].createElement(
+                    _commonsLayout.FormGroup,
+                    { label: 'Descripción' },
                     _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: 'Descripcion',
                         name: 'description', value: this.state.expense.description, onChange: this.updateExpenseValue,
                         disabled: this.state.showLegalPerson })
                 ),
-                !isBill ? '' : _react2['default'].createElement(
+                isBill && _react2['default'].createElement(
                     _commonsLayout.FormGroup,
                     { label: 'Proveedor' },
                     _react2['default'].createElement(_commonsSelect2['default'], { placeholder: 'Seleccione un Proveedor', style: 'form-control',
@@ -1099,11 +1107,11 @@ exports['default'] = _react2['default'].createClass({
                     ),
                     showLegalPersonButton
                 ),
-                !isBill ? '' : legalPersonForm,
+                isBill && legalPersonForm,
                 _react2['default'].createElement(
                     'div',
                     { className: 'form-group' },
-                    !isBill ? '' : _react2['default'].createElement(
+                    isBill && _react2['default'].createElement(
                         'div',
                         null,
                         _react2['default'].createElement(
@@ -1122,11 +1130,7 @@ exports['default'] = _react2['default'].createClass({
                     _react2['default'].createElement(
                         'label',
                         { className: 'col-sm-2 control-label' },
-                        _react2['default'].createElement(
-                            'strong',
-                            null,
-                            'Precio Total'
-                        )
+                        'Precio Total'
                     ),
                     _react2['default'].createElement(
                         'div',
@@ -1154,17 +1158,13 @@ exports['default'] = _react2['default'].createClass({
                     _react2['default'].createElement(
                         'label',
                         { className: 'col-sm-2 control-label' },
-                        _react2['default'].createElement(
-                            'strong',
-                            null,
-                            'Cambio'
-                        )
+                        'Cambio'
                     ),
                     _react2['default'].createElement(
                         'div',
                         { className: 'col-sm-4' },
-                        _react2['default'].createElement('input', { type: 'text', name: 'exchange', value: this.state.expense.exchange,
-                            onChange: this.updateExpenseValue })
+                        _react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'exchange',
+                            value: this.state.expense.exchange, onChange: this.updateExpenseValue })
                     )
                 ),
                 _react2['default'].createElement(
@@ -1285,7 +1285,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var root = 'http://localhost:8000';
+var root = 'api';
 
 var api = {
     auth: root + '/api-token-auth/',
@@ -1391,7 +1391,7 @@ function xHttpRequest(type, dataRequest, callbacks) {
 
         error: function error(xhr, status) {
 
-            console.error(xhr.statusText);
+            window.console.error(xhr.statusText);
 
             if (typeof callbacks[1] === 'function') {
                 callbacks[1]();

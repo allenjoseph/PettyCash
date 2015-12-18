@@ -22,12 +22,24 @@ module.exports = function(grunt) {
                 files: ['app/**/*.js'],
                 tasks: ['browserify']
             }
+        },
+
+        freddie: {
+            dev: {
+                options: {
+                    port: 3000,
+                    proxy: {
+                        '/api': 'http://localhost:8000/'
+                    }
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-freddie');
 
     grunt.registerTask('build', ['browserify']);
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['freddie', 'watch']);
 };

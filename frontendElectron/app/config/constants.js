@@ -1,4 +1,4 @@
-let root = 'http://localhost:8000';
+let root = 'api';
 
 export let api = {
     auth: root + '/api-token-auth/',

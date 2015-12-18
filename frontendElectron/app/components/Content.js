@@ -19,7 +19,6 @@ export default React.createClass({
         var action = ExpenseActions.getAll();
         
         action.done(() => {
-            debugger;
             this.setState(update(this.state, {
                 data: {$set: ExpenseStore.getAll()}
             }));

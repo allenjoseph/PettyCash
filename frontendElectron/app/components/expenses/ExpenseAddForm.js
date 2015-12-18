@@ -9,9 +9,16 @@ import { Form, FormGroup } from '../commons/Layout';
 export default React.createClass({
 
     getInitialState() {
+        var date = new Date();
+        var today = [
+            date.getFullYear(),
+            date.getMonth() + 1,
+            date.getDate()
+        ].join('-');
+
         return {
             expense : {
-                date: new Date(),
+                date: today,
                 description: '',
                 total_price: 0,
                 category: null,
@@ -63,7 +70,6 @@ export default React.createClass({
     },
 
     updateStateValue(e){
-        debugger;
         let newState = {};
         newState[e.target.name] = { $set: e.target.value };
 
@@ -108,7 +114,7 @@ export default React.createClass({
 
     render(){
         let legalPersonForm, showLegalPersonButton;
-        let isBill = false;
+        let isBill = undefined;
 
         if(this.state.showLegalPerson){
             
@@ -120,7 +126,7 @@ export default React.createClass({
                                 <hr/>
                             </FormGroup>;
         }
-
+        debugger;
         return(
             <div className="well">
                 <Form>
@@ -130,7 +136,7 @@ export default React.createClass({
                         </h3>
                     </FormGroup>
                     
-                    { !isBill ? '' : 
+                    { isBill && 
                         <div className="form-group">
                             <label className="col-sm-2 control-label">Codigo recibo</label>
                             <div className="col-sm-4">
@@ -140,8 +146,16 @@ export default React.createClass({
                             </div>
                         </div>
                     }
+
+                    <FormGroup label="Fecha">
                     
-                    <FormGroup label="Descripcion">
+                        <input type="date" className="form-control" placeholder="Fecha" 
+                        name="date" value={this.state.expense.date} onChange={this.updateExpenseValue}
+                        disabled={this.state.showLegalPerson}/>
+                        
+                    </FormGroup>
+
+                    <FormGroup label="Descripción">
                     
                         <input type="text" className="form-control" placeholder="Descripcion" 
                         name="description" value={this.state.expense.description} onChange={this.updateExpenseValue}
@@ -149,7 +163,7 @@ export default React.createClass({
                         
                     </FormGroup>
                     
-                    { !isBill ? '' : 
+                    { isBill &&
                         <FormGroup label="Proveedor">
 
                                 <Select placeholder="Seleccione un Proveedor" style="form-control" 
@@ -164,11 +178,11 @@ export default React.createClass({
                         </FormGroup>
                     }
 
-                    { !isBill ? '' : legalPersonForm }
+                    { isBill && legalPersonForm }
                     
                     <div className="form-group">
 
-                        { !isBill ? '' : 
+                        { isBill && 
                             <div>
                                 <label className="col-sm-2 control-label">Categoria</label>
                                 <div className="col-sm-4">
@@ -179,9 +193,7 @@ export default React.createClass({
                             </div>
                         }
                         
-                        <label className="col-sm-2 control-label">
-                            <strong>Precio Total</strong>
-                        </label>
+                        <label className="col-sm-2 control-label">Precio Total</label>
                         <div className="col-sm-4">
                             <input type="text" className="form-control" placeholder="Precio Total" 
                             name="total_price" value={this.state.expense.total_price} onChange={this.updateExpenseValue}
@@ -197,12 +209,10 @@ export default React.createClass({
                             value={this.state.expense.currency} onChange={this.updateExpenseValue}
                             data={this.state.currencies} disabled={this.state.showLegalPerson}/>
                         </div>
-                        <label className="col-sm-2 control-label">
-                            <strong>Cambio</strong>
-                        </label>
+                        <label className="col-sm-2 control-label">Cambio</label>
                         <div className="col-sm-4">
-                            <input type="text" name="exchange" value={this.state.expense.exchange}
-                            onChange={this.updateExpenseValue}/>
+                            <input type="text" className="form-control" name="exchange" 
+                            value={this.state.expense.exchange} onChange={this.updateExpenseValue}/>
                         </div>
                     </div>
                     

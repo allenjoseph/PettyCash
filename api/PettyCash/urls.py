@@ -31,6 +31,6 @@ router.register(r'installments', InstallmentViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
-    url(r'^', include(router.urls)),
+    url(r'^api/api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+    url(r'^api/', include(router.urls)),
 ]
