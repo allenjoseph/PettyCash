@@ -4,5 +4,5 @@ export default {
     
     today: () => Moment().format('YYYY-MM-DD'),
 
-    formatDate: (date, format) => Moment(date).format(format || 'YYYY-MM-DDTHH:mm')
+    format: (date, format) => Moment(date).format(format || 'YYYY-MM-DDTHH:mm')
 }

@@ -25,7 +25,7 @@ var ExpenseActions = {
 exports['default'] = ExpenseActions;
 module.exports = exports['default'];
 
-},{"../dispatchers/expense":15}],2:[function(require,module,exports){
+},{"../dispatchers/expense":14}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -48,7 +48,7 @@ var generalActions = {
 exports['default'] = generalActions;
 module.exports = exports['default'];
 
-},{"../dispatchers/general":16}],3:[function(require,module,exports){
+},{"../dispatchers/general":15}],3:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -120,7 +120,7 @@ var Body = _react2['default'].createClass({
 
 _reactDom2['default'].render(_react2['default'].createElement(Body, null), document.getElementById('wrapper'));
 
-},{"../config/constants":12,"../utils/cache":18,"./Content":4,"./Login":5,"./Nav":6,"react":183,"react-addons-update":25,"react-dom":26}],4:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"./Content":4,"./Login":5,"./Nav":6,"react":183,"react-addons-update":25,"react-dom":26}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -154,6 +154,10 @@ var _actionsExpense2 = _interopRequireDefault(_actionsExpense);
 var _reactAddonsUpdate = require('react-addons-update');
 
 var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
 
 exports['default'] = _react2['default'].createClass({
     displayName: 'Content',
@@ -222,6 +226,18 @@ exports['default'] = _react2['default'].createClass({
                         'h1',
                         null,
                         this.props.title,
+                        '   ',
+                        _react2['default'].createElement(
+                            'strong',
+                            null,
+                            _lodash2['default'].sum(_lodash2['default'].pluck(this.state.data, 'total_price'))
+                        ),
+                        ' ',
+                        _react2['default'].createElement(
+                            'small',
+                            null,
+                            _react2['default'].createElement('i', { className: 'fa fa-money' })
+                        ),
                         _react2['default'].createElement(
                             'a',
                             { href: '#', className: 'btn btn-success pull-right', onClick: this.openAddForm },
@@ -241,7 +257,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/expense":1,"../stores/expense":17,"./commons/DataTable":7,"./commons/Layout":8,"./expenses/ExpenseAddForm":10,"react":183,"react-addons-update":25}],5:[function(require,module,exports){
+},{"../actions/expense":1,"../stores/expense":16,"./commons/DataTable":7,"./commons/Layout":8,"./expenses/ExpenseAddForm":10,"lodash":23,"react":183,"react-addons-update":25}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -393,7 +409,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/general":2,"../dispatchers/dispatcher":14,"../utils/cache":18,"./commons/Layout":8,"react":183,"react-addons-update":25}],6:[function(require,module,exports){
+},{"../actions/general":2,"../dispatchers/dispatcher":13,"../utils/cache":17,"./commons/Layout":8,"react":183,"react-addons-update":25}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -415,6 +431,10 @@ var _configConstants2 = _interopRequireDefault(_configConstants);
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
+
+var _utilsCache = require('../utils/cache');
+
+var _utilsCache2 = _interopRequireDefault(_utilsCache);
 
 exports['default'] = _react2['default'].createClass({
     displayName: 'Nav',
@@ -453,8 +473,6 @@ exports['default'] = _react2['default'].createClass({
                             _react2['default'].createElement(
                                 'a',
                                 { href: 'javascript:void(0)' },
-                                _react2['default'].createElement('i', { className: 'fa fa-usd fa-fw' }),
-                                ' ',
                                 _configConstants2['default'].titles[optionKey]
                             )
                         );
@@ -468,9 +486,11 @@ exports['default'] = _react2['default'].createClass({
                         { className: 'dropdown' },
                         _react2['default'].createElement(
                             'a',
-                            { className: 'dropdown-toggle', 'data-toggle': 'dropdown', href: 'javascript:void(0)', 'aria-expanded': 'false' },
+                            { className: 'dropdown-toggle text-uppercase', 'data-toggle': 'dropdown', href: 'javascript:void(0)', 'aria-expanded': 'false' },
                             _react2['default'].createElement('i', { className: 'fa fa-user fa-fw' }),
-                            ' Daniela ',
+                            ' ',
+                            _utilsCache2['default'].get('user').username,
+                            ' ',
                             _react2['default'].createElement('span', { className: 'caret' })
                         ),
                         _react2['default'].createElement(
@@ -495,7 +515,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../config/constants":12,"./commons/Layout":8,"lodash":23,"react":183}],7:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"./commons/Layout":8,"lodash":23,"react":183}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -516,17 +536,13 @@ var _configConstants = require('../../config/constants');
 
 var _configConstants2 = _interopRequireDefault(_configConstants);
 
-var _configUtils = require('../../config/utils');
+var _utilsDates = require('../../utils/dates');
 
-var _configUtils2 = _interopRequireDefault(_configUtils);
+var _utilsDates2 = _interopRequireDefault(_utilsDates);
 
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
 
 require('datatables-bootstrap3-plugin');
 
@@ -534,18 +550,24 @@ exports['default'] = _react2['default'].createClass({
     displayName: 'DataTable',
 
     componentDidUpdate: function componentDidUpdate() {
+        var _this = this;
+
         var $table = (0, _jquery2['default'])(_reactDom2['default'].findDOMNode(this.refs.dataTable));
+
         $table.dataTable({
+
             language: _configConstants2['default'].dataTableLangEs,
             retrieve: true,
+
             fnDrawCallback: (function () {
-                this.forceUpdate();
+                _this.forceUpdate();
             }).bind(this)
+
         });
     },
 
     render: function render() {
-        var _this = this;
+        var _this2 = this;
 
         var columnsKeys = [],
             columnsNames = [],
@@ -569,7 +591,7 @@ exports['default'] = _react2['default'].createClass({
 
         columnsNames.push(_react2['default'].createElement(
             'th',
-            { key: 'actions', className: 'text-center' },
+            { key: 'actions', className: 'col-sm-2 text-center' },
             'Acciones'
         ));
 
@@ -578,10 +600,10 @@ exports['default'] = _react2['default'].createClass({
 
                 var dataColumns = columnsKeys.map((function (columnKey) {
 
-                    var value = _this.props.data[key][columnKey];
+                    var value = _this2.props.data[key][columnKey];
 
                     if (['created_date', 'date'].indexOf(columnKey) > -1) {
-                        value = _configUtils2['default'].formatDate(value, 'DD/MM/YYYY');
+                        value = _utilsDates2['default'].format(value, 'DD/MM/YYYY');
                     }
 
                     var col = columnsStyle[columnKey];
@@ -594,16 +616,16 @@ exports['default'] = _react2['default'].createClass({
 
                 dataColumns.push(_react2['default'].createElement(
                     'td',
-                    { key: 'actions', className: 'col-sm-2' },
+                    { key: 'actions', className: 'col-sm-2 text-center' },
                     _react2['default'].createElement(
                         'button',
-                        { className: 'btn btn-link text-info pull-right', style: { padding: '0' } },
-                        'Eliminar'
+                        { className: 'btn btn-link', style: { padding: '0 5px' } },
+                        _react2['default'].createElement('i', { className: 'fa fa-pencil fa-lg' })
                     ),
                     _react2['default'].createElement(
                         'button',
-                        { className: 'btn btn-link pull-right', style: { padding: '0' } },
-                        'Editar'
+                        { className: 'btn btn-link', style: { padding: '0' } },
+                        _react2['default'].createElement('i', { className: 'fa fa-trash-o fa-lg' })
                     )
                 ));
 
@@ -637,7 +659,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../../config/constants":12,"../../config/utils":13,"datatables-bootstrap3-plugin":19,"jquery":22,"moment":24,"react":183,"react-dom":26}],8:[function(require,module,exports){
+},{"../../config/constants":12,"../../utils/dates":18,"datatables-bootstrap3-plugin":19,"jquery":22,"react":183,"react-dom":26}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -934,9 +956,9 @@ var _configConstants = require('../../config/constants');
 
 var _configConstants2 = _interopRequireDefault(_configConstants);
 
-var _configUtils = require('../../config/utils');
+var _utilsDates = require('../../utils/dates');
 
-var _configUtils2 = _interopRequireDefault(_configUtils);
+var _utilsDates2 = _interopRequireDefault(_utilsDates);
 
 var _commonsLayout = require('../commons/Layout');
 
@@ -946,7 +968,7 @@ exports['default'] = _react2['default'].createClass({
     getInitialState: function getInitialState() {
         return {
             expense: {
-                date: _configUtils2['default'].today(),
+                date: _utilsDates2['default'].today(),
                 description: '',
                 total_price: 0,
                 category: null,
@@ -1029,7 +1051,7 @@ exports['default'] = _react2['default'].createClass({
     save: function save() {
         var _this = this;
 
-        this.state.expense.date = _configUtils2['default'].formatDate(this.state.expense.date);
+        this.state.expense.date = _utilsDates2['default'].format(this.state.expense.date);
 
         var action = _actionsExpense2['default'].add(this.state.expense);
 
@@ -1215,7 +1237,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../../actions/expense":1,"../../config/constants":12,"../../config/utils":13,"../commons/Layout":8,"../commons/Select":9,"../legal-persons/LegalPersonAddForm":11,"react":183,"react-addons-update":25}],11:[function(require,module,exports){
+},{"../../actions/expense":1,"../../config/constants":12,"../../utils/dates":18,"../commons/Layout":8,"../commons/Select":9,"../legal-persons/LegalPersonAddForm":11,"react":183,"react-addons-update":25}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1304,7 +1326,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../../dispatchers/dispatcher":14,"../commons/Layout":8,"react":183,"react-addons-update":25}],12:[function(require,module,exports){
+},{"../../dispatchers/dispatcher":13,"../commons/Layout":8,"react":183,"react-addons-update":25}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1378,31 +1400,6 @@ exports['default'] = {
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
-exports['default'] = {
-
-    today: function today() {
-        return (0, _moment2['default'])().format('YYYY-MM-DD');
-    },
-
-    formatDate: function formatDate(date, format) {
-        return (0, _moment2['default'])(date).format(format || 'YYYY-MM-DDTHH:mm');
-    }
-};
-module.exports = exports['default'];
-
-},{"moment":24}],14:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
 exports.xHttpRequest = xHttpRequest;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -1455,7 +1452,7 @@ function xHttpRequest(type, dataRequest, callbacks) {
 
 ;
 
-},{"../config/constants":12,"../utils/cache":18,"jquery":22}],15:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"jquery":22}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1510,7 +1507,7 @@ var ExpenseDispatcher = {
 exports['default'] = ExpenseDispatcher;
 module.exports = exports['default'];
 
-},{"../config/constants":12,"../stores/expense":17,"../utils/cache":18,"./dispatcher":14}],16:[function(require,module,exports){
+},{"../config/constants":12,"../stores/expense":16,"../utils/cache":17,"./dispatcher":13}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1535,6 +1532,7 @@ var GeneralDispatcher = {
             if (data.token) {
                 _utilsCache2['default'].set('token', data.token);
                 _utilsCache2['default'].set('card_selected', data.cards[0]);
+                _utilsCache2['default'].set('user', data.user);
             }
         };
 
@@ -1545,7 +1543,7 @@ var GeneralDispatcher = {
 exports['default'] = GeneralDispatcher;
 module.exports = exports['default'];
 
-},{"../config/constants":12,"../utils/cache":18,"./dispatcher":14}],17:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"./dispatcher":13}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1580,7 +1578,7 @@ var ExpenseStore = {
 exports["default"] = ExpenseStore;
 module.exports = exports["default"];
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1600,7 +1598,32 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+exports['default'] = {
+
+    today: function today() {
+        return (0, _moment2['default'])().format('YYYY-MM-DD');
+    },
+
+    format: function format(date, _format) {
+        return (0, _moment2['default'])(date).format(_format || 'YYYY-MM-DDTHH:mm');
+    }
+};
+module.exports = exports['default'];
+
+},{"moment":24}],19:[function(require,module,exports){
 /*! DataTables Bootstrap 3 integration
  * ©2011-2014 SpryMedia Ltd - datatables.net/license
  */

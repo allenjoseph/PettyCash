@@ -5,6 +5,7 @@
   "author": "Allen Joseph",
   "dependencies": {
     "bootswatch": "~3.3.5",
-    "datatables": "~1.10.9"
+    "datatables": "~1.10.9",
+    "components-font-awesome": "~4.5.0"
   }
 }

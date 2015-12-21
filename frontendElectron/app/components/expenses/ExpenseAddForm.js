@@ -4,7 +4,7 @@ import LegalPersonAddForm from '../legal-persons/LegalPersonAddForm';
 import update from 'react-addons-update';
 import ExpenseActions from '../../actions/expense';
 import Constants from '../../config/constants';
-import Utils from '../../config/utils';
+import Dates from '../../utils/dates';
 import { Form, FormGroup } from '../commons/Layout';
 
 export default React.createClass({
@@ -12,7 +12,7 @@ export default React.createClass({
     getInitialState() {
         return {
             expense : {
-                date: Utils.today(),
+                date: Dates.today(),
                 description: '',
                 total_price: 0,
                 category: null,
@@ -94,7 +94,7 @@ export default React.createClass({
 
     save(){
 
-        this.state.expense.date = Utils.formatDate(this.state.expense.date);
+        this.state.expense.date = Dates.format(this.state.expense.date);
 
         var action = ExpenseActions.add(this.state.expense)
         

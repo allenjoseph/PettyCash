@@ -2,6 +2,7 @@ import React from 'react';
 import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from './commons/Layout';
 import Constants from '../config/constants';
 import _ from 'lodash';
+import Cache from '../utils/cache';
 
 export default React.createClass({
     getInitialState() {
@@ -10,8 +11,6 @@ export default React.createClass({
         };
     },
     render() {
-
-
 
         return(
             <NavBar>
@@ -26,7 +25,7 @@ export default React.createClass({
                             return (
                                 <li key={optionKey} className={this.props.option === optionKey ? 'active' : ''}>
                                     <a href="javascript:void(0)">
-                                        <i className="fa fa-usd fa-fw"></i> {Constants.titles[optionKey]}
+                                        {Constants.titles[optionKey]}
                                     </a>
                                 </li>
                             );
@@ -35,8 +34,10 @@ export default React.createClass({
 
                     <NavBarContent orientation="right">
                         <li className="dropdown">
-                            <a className="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
-                                <i className="fa fa-user fa-fw"></i> Daniela <span className="caret"></span>
+                            <a className="dropdown-toggle text-uppercase" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
+                                <i className="fa fa-user fa-fw"></i>&nbsp;
+                                {Cache.get('user').username}&nbsp;
+                                <span className="caret"></span>
                             </a>
                             <ul className="dropdown-menu">
                                 <li>

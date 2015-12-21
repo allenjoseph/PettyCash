@@ -10,6 +10,7 @@ let GeneralDispatcher = {
             if(data.token){
                 Cache.set('token', data.token);
                 Cache.set('card_selected', data.cards[0]);
+                Cache.set('user', data.user);
             }
         }
         

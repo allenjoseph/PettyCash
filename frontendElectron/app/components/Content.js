@@ -5,6 +5,7 @@ import { Container, PageHeader, Row } from './commons/Layout';
 import ExpenseStore from '../stores/expense';
 import ExpenseActions from '../actions/expense';
 import update from 'react-addons-update';
+import _ from 'lodash';
 
 export default React.createClass({
 
@@ -60,7 +61,8 @@ export default React.createClass({
                 <PageHeader>
                     <Row>
                         <h1>
-                            {this.props.title}
+                            {this.props.title}&nbsp;&nbsp;&nbsp;
+                            <strong>{_.sum(_.pluck(this.state.data,'total_price'))}</strong>&nbsp;<small><i className="fa fa-money"></i></small>
                             <a href="#" className="btn btn-success pull-right" onClick={this.openAddForm}>Agregar</a>
                         </h1>
                     </Row>
@@ -71,6 +73,7 @@ export default React.createClass({
                 <Row>
                     <DataTable data={this.state.data} option={this.props.option}/>
                 </Row>
+
             </Container>
         );
     }
