@@ -6,7 +6,7 @@ var ExpenseStore = {
     
     get: (id) => _expenses[id],
     
-    create: (expense) => {
+    add: (expense) => {
         _expenses[expense.id] = expense;
     },
     

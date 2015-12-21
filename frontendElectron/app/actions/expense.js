@@ -4,7 +4,7 @@ let ExpenseActions = {
     
     getAll: () => ExpenseDispatcher.getAll(),
     
-    add: (expense) =>  ExpenseDispatcher.create(expense)
+    add: (expense) =>  ExpenseDispatcher.add(expense)
 };
 
 export default ExpenseActions;

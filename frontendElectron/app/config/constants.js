@@ -17,8 +17,7 @@ export default {
     },
     titles:{
         expenses: 'Gastos',
-        stadistics: 'Estadisticas',
-        ruc: 'Consulta RUC'
+        stadistics: 'Estadisticas'
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',
@@ -48,10 +47,25 @@ export default {
     },
     dataTableColumns : {
         expenses: {
-            created_date: 'Fecha',
-            number: 'Codigo',
-            description: 'Descripcion',
-            total_price: 'Precio total'
+            date: {name: 'Fecha', style: 'col-sm-3'},
+            description: {name: 'Descripcion', style: 'col-sm-3'},
+            total_price: {name: 'Precio total', style: 'col-sm-3 text-right'}
         }
-    }
+    },
+    currencies : [
+        {id: 0, name: 'Nuevo Sol'},
+        {id: 1, name: 'Dolar Estadounidense'},
+        {id: 2, name: 'Euro'}
+    ],
+    installmentsRange : [0,1,2,3,4,5,6,7,8,9].map(function(elem){
+        return { id: elem + 1, name: elem + 1 };
+    }),
+    remindMe : [
+        {id: 0, name: 'Nunca'},
+        {id: 1, name: 'Diariamente'},
+        {id: 2, name: 'Semanalmente'},
+        {id: 3, name: 'Quincenalmente'},
+        {id: 4, name: 'Mensualmente'},
+        {id: 5, name: 'Anualmente'}
+    ],
 };

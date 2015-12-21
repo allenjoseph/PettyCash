@@ -6,7 +6,7 @@ export default React.createClass({
         let data = this.props.data || [];
 
         if(this.props.placeholder){
-            data.unshift({ id: '0', name: this.props.placeholder});
+            data.unshift({ id: 'placeholder', name: this.props.placeholder});
         }
 
         let options = data.map((option) => {

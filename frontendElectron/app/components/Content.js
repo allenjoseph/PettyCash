@@ -40,7 +40,8 @@ export default React.createClass({
     updateData() {
         
         this.setState(update(this.state, {
-            data: {$set: ExpenseStore.getAll()}
+            data: {$set: ExpenseStore.getAll()},
+            showAddForm: {$set: false}
         }));
     },
 
@@ -49,7 +50,7 @@ export default React.createClass({
 
         if(this.state.showAddForm){
             addForm = <Row>
-                        <ExpenseAddForm close={this.closeAddForm} addNewRecord={this.addNewRecord}/>
+                        <ExpenseAddForm close={this.closeAddForm} addNewRecord={this.addNewRecord} updateData={this.updateData}/>
                         <hr/>
                     </Row>;
         }

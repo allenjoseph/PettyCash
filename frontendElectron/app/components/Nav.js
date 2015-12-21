@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from './commons/Layout';
 import Constants from '../config/constants';
+import _ from 'lodash';
 
 export default React.createClass({
     getInitialState() {
@@ -9,6 +10,9 @@ export default React.createClass({
         };
     },
     render() {
+
+
+
         return(
             <NavBar>
                 <NavBarHeader>
@@ -18,21 +22,15 @@ export default React.createClass({
 
                 <NavBarCollapse>
                     <NavBarContent>
-                        <li className={this.props.option === Constants.options.expenses ? 'active' : ''}>
-                            <a href="javascript:void(0)">
-                                <i className="fa fa-usd fa-fw"></i> {Constants.titles.expenses}
-                            </a>
-                        </li>
-                        <li className={this.props.option === Constants.options.stadistics ? 'active' : ''}>
-                            <a href="javascript:void(0)">
-                                <i className="fa fa-bar-chart-o fa-fw"></i> {Constants.titles.stadistics}
-                            </a>
-                        </li>
-                        <li className={this.props.option === Constants.options.ruc ? 'active' : ''}>
-                            <a href="javascript:void(0)">
-                                <i className="fa fa-child fa-fw"></i> {Constants.titles.ruc}
-                            </a>
-                        </li>
+                        {(_.keys(Constants.titles)).map((optionKey)=>{
+                            return (
+                                <li key={optionKey} className={this.props.option === optionKey ? 'active' : ''}>
+                                    <a href="javascript:void(0)">
+                                        <i className="fa fa-usd fa-fw"></i> {Constants.titles[optionKey]}
+                                    </a>
+                                </li>
+                            );
+                        },this)}
                     </NavBarContent>
 
                     <NavBarContent orientation="right">

@@ -17,6 +17,7 @@ class RemindMe(Enum):
 class Currency(Enum):
     PEN = 0
     USD = 1
+    EUR = 2
 
     @classmethod
     def choices(cls):

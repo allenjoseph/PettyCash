@@ -48,9 +48,10 @@ class ExpenseSerializer(serializers.ModelSerializer):
         expense = Expense.objects.create(**validated_data)
 
         installments = validated_data['installments']
+        date = datetime(expense.date.year, expense.date.month, 1)
+
         if installments > 1:
             amount = self.calcAmount(expense, installments)
-            date = datetime(expense.date.year, expense.date.month, 1)
 
             while installments > 0:
                 Installment.objects.create(
@@ -64,9 +65,9 @@ class ExpenseSerializer(serializers.ModelSerializer):
         else:
             Installment.objects.create(
                 expense=expense,
-                month=expense.date.month,
+                month=date,
                 amount=expense.total_price,
-                rate=0
+                rate=0.0
             )
 
         return expense

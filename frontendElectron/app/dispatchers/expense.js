@@ -14,16 +14,18 @@ let ExpenseDispatcher = {
         };
         
         let success = (data) => {
-            data.map((expense) => ExpenseStore.create(expense));
+            data.map((expense) => ExpenseStore.add(expense));
         }
 
         return xHttpRequest('GET', [api.expenses, null, params], [success]);
     },
 
-    create: (expense) => {
+    add: (expense) => {
+
+        console.log(expense);
         
         let success = (data) => {
-            ExpenseStore.create(data)
+            ExpenseStore.add(data)
         }
 
         return xHttpRequest('POST', [api.expenses, expense], [success]);

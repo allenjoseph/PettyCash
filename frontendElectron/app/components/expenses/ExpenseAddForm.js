@@ -4,43 +4,32 @@ import LegalPersonAddForm from '../legal-persons/LegalPersonAddForm';
 import update from 'react-addons-update';
 import ExpenseActions from '../../actions/expense';
 import Constants from '../../config/constants';
+import Utils from '../../config/utils';
 import { Form, FormGroup } from '../commons/Layout';
 
 export default React.createClass({
 
     getInitialState() {
-        var date = new Date();
-        var today = [
-            date.getFullYear(),
-            date.getMonth() + 1,
-            date.getDate()
-        ].join('-');
-
         return {
             expense : {
-                date: today,
+                date: Utils.today(),
                 description: '',
                 total_price: 0,
                 category: null,
                 number: '',
                 legal_person: null,
-                repeat: false,
-                currency: 'PEN',
+                repeat: 0,
+                currency: 0,
                 exchange: 0,
-                card: '',
+                card: 1,
                 installments: 1,
             },
             showLegalPerson: false,
             legalPersons: [],
             categories: [],
-            installmentsRange: [0,1,2,3,4,5,6,7,8,9].map(function(elem){
-                return { id: elem + 1, name: elem + 1 };
-            }),
-            currencies: [
-                {id: 'PEN', name: 'Nuevo Sol'},
-                {id: 'USD', name: 'Dolar Estadounidense'},
-                {id: 'EUR', name: 'Euro'}
-            ]
+            installmentsRange: Constants.installmentsRange,
+            currencies: Constants.currencies,
+            repeatOptions: Constants.remindMe
         };
     },
 
@@ -104,7 +93,10 @@ export default React.createClass({
     },
 
     save(){
-        var action = ExpenseActions.create(this.state.expense)
+
+        this.state.expense.date = Utils.formatDate(this.state.expense.date);
+
+        var action = ExpenseActions.add(this.state.expense)
         
         action.done(() => {
             this.setState(this.getInitialState());
@@ -126,7 +118,7 @@ export default React.createClass({
                                 <hr/>
                             </FormGroup>;
         }
-        debugger;
+
         return(
             <div className="well">
                 <Form>
@@ -222,6 +214,14 @@ export default React.createClass({
                         value={this.state.expense.installments} onChange={this.updateExpenseValue}
                         data={this.state.installmentsRange} disabled={this.state.showLegalPerson}/>
                             
+                    </FormGroup>
+
+                    <FormGroup label="Repetir gasto" size="4">
+
+                        <Select style="form-control" name="repeat" 
+                        value={this.state.expense.repeat} onChange={this.updateExpenseValue}
+                        data={this.state.repeatOptions} disabled={this.state.showLegalPerson}/>
+
                     </FormGroup>
 
                     <FormGroup label="">
