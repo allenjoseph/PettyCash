@@ -69,9 +69,9 @@ var _Nav = require('./Nav');
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Content = require('./Content');
+var _expensesExpenses = require('./expenses/Expenses');
 
-var _Content2 = _interopRequireDefault(_Content);
+var _expensesExpenses2 = _interopRequireDefault(_expensesExpenses);
 
 var _reactAddonsUpdate = require('react-addons-update');
 
@@ -109,7 +109,7 @@ var Body = _react2['default'].createClass({
                 'div',
                 null,
                 _react2['default'].createElement(_Nav2['default'], { option: this.state.option }),
-                _react2['default'].createElement(_Content2['default'], { option: this.state.option,
+                _react2['default'].createElement(_expensesExpenses2['default'], { option: this.state.option,
                     title: this.state.title })
             );
         } else {
@@ -120,144 +120,7 @@ var Body = _react2['default'].createClass({
 
 _reactDom2['default'].render(_react2['default'].createElement(Body, null), document.getElementById('wrapper'));
 
-},{"../config/constants":12,"../utils/cache":17,"./Content":4,"./Login":5,"./Nav":6,"react":183,"react-addons-update":25,"react-dom":26}],4:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _commonsDataTable = require('./commons/DataTable');
-
-var _commonsDataTable2 = _interopRequireDefault(_commonsDataTable);
-
-var _expensesExpenseAddForm = require('./expenses/ExpenseAddForm');
-
-var _expensesExpenseAddForm2 = _interopRequireDefault(_expensesExpenseAddForm);
-
-var _commonsLayout = require('./commons/Layout');
-
-var _storesExpense = require('../stores/expense');
-
-var _storesExpense2 = _interopRequireDefault(_storesExpense);
-
-var _actionsExpense = require('../actions/expense');
-
-var _actionsExpense2 = _interopRequireDefault(_actionsExpense);
-
-var _reactAddonsUpdate = require('react-addons-update');
-
-var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-exports['default'] = _react2['default'].createClass({
-    displayName: 'Content',
-
-    getInitialState: function getInitialState() {
-        return {
-            showAddForm: false,
-            data: {}
-        };
-    },
-
-    componentDidMount: function componentDidMount() {
-        var _this = this;
-
-        var action = _actionsExpense2['default'].getAll();
-
-        action.done((function () {
-            _this.setState((0, _reactAddonsUpdate2['default'])(_this.state, {
-                data: { $set: _storesExpense2['default'].getAll() }
-            }));
-        }).bind(this));
-    },
-
-    openAddForm: function openAddForm() {
-        this.setState({
-            showAddForm: true
-        });
-    },
-
-    closeAddForm: function closeAddForm() {
-        this.setState({
-            showAddForm: false
-        });
-    },
-
-    updateData: function updateData() {
-
-        this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
-            data: { $set: _storesExpense2['default'].getAll() },
-            showAddForm: { $set: false }
-        }));
-    },
-
-    render: function render() {
-        var addForm = undefined;
-
-        if (this.state.showAddForm) {
-            addForm = _react2['default'].createElement(
-                _commonsLayout.Row,
-                null,
-                _react2['default'].createElement(_expensesExpenseAddForm2['default'], { close: this.closeAddForm, addNewRecord: this.addNewRecord, updateData: this.updateData }),
-                _react2['default'].createElement('hr', null)
-            );
-        }
-
-        return _react2['default'].createElement(
-            _commonsLayout.Container,
-            null,
-            _react2['default'].createElement(
-                _commonsLayout.PageHeader,
-                null,
-                _react2['default'].createElement(
-                    _commonsLayout.Row,
-                    null,
-                    _react2['default'].createElement(
-                        'h1',
-                        null,
-                        this.props.title,
-                        '   ',
-                        _react2['default'].createElement(
-                            'strong',
-                            null,
-                            _lodash2['default'].sum(_lodash2['default'].pluck(this.state.data, 'total_price'))
-                        ),
-                        ' ',
-                        _react2['default'].createElement(
-                            'small',
-                            null,
-                            _react2['default'].createElement('i', { className: 'fa fa-money' })
-                        ),
-                        _react2['default'].createElement(
-                            'a',
-                            { href: '#', className: 'btn btn-success pull-right', onClick: this.openAddForm },
-                            'Agregar'
-                        )
-                    )
-                )
-            ),
-            addForm,
-            _react2['default'].createElement(
-                _commonsLayout.Row,
-                null,
-                _react2['default'].createElement(_commonsDataTable2['default'], { data: this.state.data, option: this.props.option })
-            )
-        );
-    }
-});
-module.exports = exports['default'];
-
-},{"../actions/expense":1,"../stores/expense":16,"./commons/DataTable":7,"./commons/Layout":8,"./expenses/ExpenseAddForm":10,"lodash":23,"react":183,"react-addons-update":25}],5:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"./Login":4,"./Nav":5,"./expenses/Expenses":10,"react":183,"react-addons-update":25,"react-dom":26}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -409,7 +272,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/general":2,"../dispatchers/dispatcher":13,"../utils/cache":17,"./commons/Layout":8,"react":183,"react-addons-update":25}],6:[function(require,module,exports){
+},{"../actions/general":2,"../dispatchers/dispatcher":13,"../utils/cache":17,"./commons/Layout":7,"react":183,"react-addons-update":25}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -515,7 +378,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../config/constants":12,"../utils/cache":17,"./commons/Layout":8,"lodash":23,"react":183}],7:[function(require,module,exports){
+},{"../config/constants":12,"../utils/cache":17,"./commons/Layout":7,"lodash":23,"react":183}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -540,102 +403,109 @@ var _utilsDates = require('../../utils/dates');
 
 var _utilsDates2 = _interopRequireDefault(_utilsDates);
 
+var _reactAddonsUpdate = require('react-addons-update');
+
+var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
 
 require('datatables-bootstrap3-plugin');
 
 exports['default'] = _react2['default'].createClass({
     displayName: 'DataTable',
 
+    getInitialState: function getInitialState() {
+        return {
+            headerColumns: this.getHeaderColumns(),
+            records: []
+        };
+    },
+
+    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+
+        if (nextProps.dataChanged) {
+
+            this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
+                records: { $set: this.getRecords(nextProps.data) }
+            }));
+        }
+    },
+
+    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+        if (nextProps.dataChanged) {
+
+            var $table = (0, _jquery2['default'])(_reactDom2['default'].findDOMNode(this.refs.dataTable));
+
+            $table.dataTable().fnDestroy();
+        }
+    },
+
     componentDidUpdate: function componentDidUpdate() {
-        var _this = this;
+        if (this.props.dataChanged) {
 
-        var $table = (0, _jquery2['default'])(_reactDom2['default'].findDOMNode(this.refs.dataTable));
+            var $table = (0, _jquery2['default'])(_reactDom2['default'].findDOMNode(this.refs.dataTable));
 
-        $table.dataTable({
+            $table.dataTable({
+                language: _configConstants2['default'].dataTableLangEs,
+                retrieve: true
+            });
+        }
+    },
 
-            language: _configConstants2['default'].dataTableLangEs,
-            retrieve: true,
+    getHeaderColumns: function getHeaderColumns() {
+        var columns = [];
+        var columnsStyle = _configConstants2['default'].dataTableColumns[this.props.option];
 
-            fnDrawCallback: (function () {
-                _this.forceUpdate();
-            }).bind(this)
-
+        columns = _lodash2['default'].map(columnsStyle, function (col, key) {
+            return {
+                key: key,
+                styleClass: col.style,
+                value: col.name
+            };
         });
+
+        columns.push({
+            key: 'actions',
+            styleClass: 'col-sm-2 text-center',
+            value: 'Acciones'
+        });
+
+        return columns;
+    },
+
+    getRecords: function getRecords(data) {
+        var records = [];
+        var columnsStyle = _configConstants2['default'].dataTableColumns[this.props.option];
+
+        records = _lodash2['default'].map(data, function (record, recordKey) {
+
+            record.columns = _lodash2['default'].map(columnsStyle, function (col, colKey) {
+                var value = record[colKey];
+
+                if (['created_date', 'date'].indexOf(colKey) > -1) {
+                    value = _utilsDates2['default'].format(value, 'DD/MM/YYYY');
+                }
+
+                return {
+                    key: colKey,
+                    styleClass: col.style,
+                    value: value
+                };
+            });
+
+            return record;
+        });
+
+        return records;
     },
 
     render: function render() {
-        var _this2 = this;
-
-        var columnsKeys = [],
-            columnsNames = [],
-            rowsValues = [],
-            columnsStyle = _configConstants2['default'].dataTableColumns[this.props.option];
-
-        for (var key in columnsStyle) {
-            if (columnsStyle.hasOwnProperty(key)) {
-
-                columnsKeys.push(key);
-
-                var col = columnsStyle[key];
-
-                columnsNames.push(_react2['default'].createElement(
-                    'th',
-                    { key: key, className: col.style },
-                    col.name
-                ));
-            }
-        }
-
-        columnsNames.push(_react2['default'].createElement(
-            'th',
-            { key: 'actions', className: 'col-sm-2 text-center' },
-            'Acciones'
-        ));
-
-        for (var key in this.props.data) {
-            if (this.props.data.hasOwnProperty(key)) {
-
-                var dataColumns = columnsKeys.map((function (columnKey) {
-
-                    var value = _this2.props.data[key][columnKey];
-
-                    if (['created_date', 'date'].indexOf(columnKey) > -1) {
-                        value = _utilsDates2['default'].format(value, 'DD/MM/YYYY');
-                    }
-
-                    var col = columnsStyle[columnKey];
-                    return _react2['default'].createElement(
-                        'td',
-                        { key: columnKey, className: col.style },
-                        value
-                    );
-                }).bind(this));
-
-                dataColumns.push(_react2['default'].createElement(
-                    'td',
-                    { key: 'actions', className: 'col-sm-2 text-center' },
-                    _react2['default'].createElement(
-                        'button',
-                        { className: 'btn btn-link', style: { padding: '0 5px' } },
-                        _react2['default'].createElement('i', { className: 'fa fa-pencil fa-lg' })
-                    ),
-                    _react2['default'].createElement(
-                        'button',
-                        { className: 'btn btn-link', style: { padding: '0' } },
-                        _react2['default'].createElement('i', { className: 'fa fa-trash-o fa-lg' })
-                    )
-                ));
-
-                rowsValues.push(_react2['default'].createElement(
-                    'tr',
-                    { key: this.props.data[key].id, style: { cursor: 'pointer' }, className: 'active' },
-                    dataColumns
-                ));
-            }
-        }
 
         return _react2['default'].createElement(
             'table',
@@ -646,20 +516,52 @@ exports['default'] = _react2['default'].createClass({
                 _react2['default'].createElement(
                     'tr',
                     { className: 'info' },
-                    columnsNames
+                    this.state.headerColumns.map(function (col) {
+                        return _react2['default'].createElement(
+                            'th',
+                            { key: col.key, className: col.styleClass },
+                            col.value
+                        );
+                    })
                 )
             ),
             _react2['default'].createElement(
                 'tbody',
                 null,
-                rowsValues
+                this.state.records.map(function (record) {
+                    return _react2['default'].createElement(
+                        'tr',
+                        { key: record.id, style: { cursor: 'pointer' }, className: 'active' },
+                        record.columns.map(function (col) {
+                            return _react2['default'].createElement(
+                                'td',
+                                { key: col.key, className: col.styleClass },
+                                col.value
+                            );
+                        }),
+                        _react2['default'].createElement(
+                            'td',
+                            { key: 'actions', className: 'col-sm-2 text-center' },
+                            _react2['default'].createElement(
+                                'button',
+                                { className: 'btn btn-link', style: { padding: '0 5px' } },
+                                _react2['default'].createElement('i', { className: 'fa fa-pencil fa-lg' })
+                            ),
+                            _react2['default'].createElement(
+                                'button',
+                                { className: 'btn btn-link', style: { padding: '0' } },
+                                _react2['default'].createElement('i', { className: 'fa fa-trash-o fa-lg' })
+                            )
+                        )
+                    );
+                })
             )
         );
     }
 });
 module.exports = exports['default'];
 
-},{"../../config/constants":12,"../../utils/dates":18,"datatables-bootstrap3-plugin":19,"jquery":22,"react":183,"react-dom":26}],8:[function(require,module,exports){
+},{"../../config/constants":12,"../../utils/dates":18,"datatables-bootstrap3-plugin":19,"jquery":22,"lodash":23,"react":183,"react-addons-update":25,"react-dom":26}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -881,7 +783,7 @@ var Well = _react2['default'].createClass({
 });
 exports.Well = Well;
 
-},{"react":183}],9:[function(require,module,exports){
+},{"react":183}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -923,7 +825,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"react":183}],10:[function(require,module,exports){
+},{"react":183}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1237,7 +1139,144 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../../actions/expense":1,"../../config/constants":12,"../../utils/dates":18,"../commons/Layout":8,"../commons/Select":9,"../legal-persons/LegalPersonAddForm":11,"react":183,"react-addons-update":25}],11:[function(require,module,exports){
+},{"../../actions/expense":1,"../../config/constants":12,"../../utils/dates":18,"../commons/Layout":7,"../commons/Select":8,"../legal-persons/LegalPersonAddForm":11,"react":183,"react-addons-update":25}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _commonsDataTable = require('../commons/DataTable');
+
+var _commonsDataTable2 = _interopRequireDefault(_commonsDataTable);
+
+var _ExpenseAddForm = require('./ExpenseAddForm');
+
+var _ExpenseAddForm2 = _interopRequireDefault(_ExpenseAddForm);
+
+var _commonsLayout = require('../commons/Layout');
+
+var _storesExpense = require('../../stores/expense');
+
+var _storesExpense2 = _interopRequireDefault(_storesExpense);
+
+var _actionsExpense = require('../../actions/expense');
+
+var _actionsExpense2 = _interopRequireDefault(_actionsExpense);
+
+var _reactAddonsUpdate = require('react-addons-update');
+
+var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+exports['default'] = _react2['default'].createClass({
+    displayName: 'Expenses',
+
+    getInitialState: function getInitialState() {
+        return {
+            showAddForm: false,
+            data: {},
+            dataChanged: false
+        };
+    },
+
+    componentDidMount: function componentDidMount() {
+        var _this = this;
+
+        var action = _actionsExpense2['default'].getAll();
+
+        action.done((function () {
+            _this.setState((0, _reactAddonsUpdate2['default'])(_this.state, {
+                data: { $set: _storesExpense2['default'].getAll() },
+                dataChanged: { $set: true }
+            }));
+        }).bind(this));
+    },
+
+    openAddForm: function openAddForm() {
+        this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
+            showAddForm: { $set: true },
+            dataChanged: { $set: false }
+        }));
+    },
+
+    closeAddForm: function closeAddForm() {
+        this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
+            showAddForm: { $set: false },
+            dataChanged: { $set: false }
+        }));
+    },
+
+    updateData: function updateData() {
+
+        this.setState((0, _reactAddonsUpdate2['default'])(this.state, {
+            data: { $set: _storesExpense2['default'].getAll() },
+            showAddForm: { $set: false },
+            dataChanged: { $set: true }
+        }));
+    },
+
+    render: function render() {
+
+        return _react2['default'].createElement(
+            _commonsLayout.Container,
+            null,
+            _react2['default'].createElement(
+                _commonsLayout.PageHeader,
+                null,
+                _react2['default'].createElement(
+                    _commonsLayout.Row,
+                    null,
+                    _react2['default'].createElement(
+                        'h1',
+                        null,
+                        this.props.title,
+                        '   ',
+                        _react2['default'].createElement(
+                            'strong',
+                            null,
+                            _lodash2['default'].sum(_lodash2['default'].pluck(this.state.data, 'total_price'))
+                        ),
+                        ' ',
+                        _react2['default'].createElement(
+                            'small',
+                            null,
+                            _react2['default'].createElement('i', { className: 'fa fa-money' })
+                        ),
+                        _react2['default'].createElement(
+                            'a',
+                            { href: '#', className: 'btn btn-success pull-right', onClick: this.openAddForm },
+                            'Agregar'
+                        )
+                    )
+                )
+            ),
+            this.state.showAddForm && _react2['default'].createElement(
+                _commonsLayout.Row,
+                null,
+                _react2['default'].createElement(_ExpenseAddForm2['default'], { close: this.closeAddForm, addNewRecord: this.addNewRecord, updateData: this.updateData }),
+                _react2['default'].createElement('hr', null)
+            ),
+            _react2['default'].createElement(
+                _commonsLayout.Row,
+                null,
+                _react2['default'].createElement(_commonsDataTable2['default'], { data: this.state.data, dataChanged: this.state.dataChanged, option: this.props.option })
+            )
+        );
+    }
+});
+module.exports = exports['default'];
+
+},{"../../actions/expense":1,"../../stores/expense":16,"../commons/DataTable":6,"../commons/Layout":7,"./ExpenseAddForm":9,"lodash":23,"react":183,"react-addons-update":25}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1326,7 +1365,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../../dispatchers/dispatcher":13,"../commons/Layout":8,"react":183,"react-addons-update":25}],12:[function(require,module,exports){
+},{"../../dispatchers/dispatcher":13,"../commons/Layout":7,"react":183,"react-addons-update":25}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1383,8 +1422,8 @@ exports['default'] = {
     dataTableColumns: {
         expenses: {
             date: { name: 'Fecha', style: 'col-sm-3' },
-            description: { name: 'Descripcion', style: 'col-sm-3' },
-            total_price: { name: 'Precio total', style: 'col-sm-3 text-right' }
+            description: { name: 'Descripcion', style: 'col-sm-5' },
+            total_price: { name: 'Precio total', style: 'col-sm-2 text-right' }
         }
     },
     currencies: [{ id: 0, name: 'Nuevo Sol' }, { id: 1, name: 'Dolar Estadounidense' }, { id: 2, name: 'Euro' }],

@@ -48,8 +48,8 @@ export default {
     dataTableColumns : {
         expenses: {
             date: {name: 'Fecha', style: 'col-sm-3'},
-            description: {name: 'Descripcion', style: 'col-sm-3'},
-            total_price: {name: 'Precio total', style: 'col-sm-3 text-right'}
+            description: {name: 'Descripcion', style: 'col-sm-5'},
+            total_price: {name: 'Precio total', style: 'col-sm-2 text-right'}
         }
     },
     currencies : [

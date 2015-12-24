@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login';
 import Nav from './Nav';
-import Content from './Content';
+import Expenses from './expenses/Expenses';
 import update from 'react-addons-update';
 import Constants from '../config/constants';
 import Cache from '../utils/cache';
@@ -30,7 +30,7 @@ let Body = React.createClass({
             return (
                 <div>
                     <Nav option={this.state.option}/>
-                    <Content option={this.state.option}
+                    <Expenses option={this.state.option}
                     title={this.state.title}/>
                 </div>
             );

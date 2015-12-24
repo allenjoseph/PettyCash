@@ -2,85 +2,126 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Constants from '../../config/constants';
 import Dates from '../../utils/dates';
+import update from 'react-addons-update';
 import $ from 'jquery';
+import _ from 'lodash';
 
 require('datatables-bootstrap3-plugin');
 
 export default React.createClass({
 
+    getInitialState(){
+        return {
+            headerColumns: this.getHeaderColumns(),
+            records: []
+        }
+    },
+
+    componentWillReceiveProps(nextProps) {
+
+        if(nextProps.dataChanged){
+
+            this.setState(update(this.state, {
+                records: {$set: this.getRecords(nextProps.data)}
+            }));
+        }
+    },
+
+    componentWillUpdate: function(nextProps, nextState) {
+        if(nextProps.dataChanged){
+
+            let $table = $(ReactDOM.findDOMNode(this.refs.dataTable));
+
+            $table.dataTable().fnDestroy();
+        }
+    },
+
     componentDidUpdate(){
-        let $table = $(ReactDOM.findDOMNode(this.refs.dataTable));
+        if(this.props.dataChanged){
 
-        $table.dataTable({
-
-            language: Constants.dataTableLangEs,
-            retrieve: true,
+            let $table = $(ReactDOM.findDOMNode(this.refs.dataTable));
             
-            fnDrawCallback: () => {
-                this.forceUpdate();
-            }.bind(this)
+            $table.dataTable({
+                language: Constants.dataTableLangEs,
+                retrieve: true
+            });
+        }
+    },
 
+    getHeaderColumns(){
+        let columns = [];
+        let columnsStyle = Constants.dataTableColumns[this.props.option];
+
+        columns = _.map(columnsStyle, (col, key) => {
+            return {
+                key: key, 
+                styleClass: col.style, 
+                value: col.name
+            };
         });
+
+        columns.push({
+            key: 'actions', 
+            styleClass: 'col-sm-2 text-center', 
+            value: 'Acciones'
+        });
+
+        return columns;
+    },
+
+    getRecords(data){
+        let records = [];
+        let columnsStyle = Constants.dataTableColumns[this.props.option];
+
+        records = _.map(data, (record, recordKey) => {
+
+            record.columns = _.map(columnsStyle, (col, colKey) => {
+                let value = record[colKey];
+
+                if(['created_date', 'date'].indexOf(colKey) > -1){
+                    value = Dates.format(value,'DD/MM/YYYY');
+                }
+
+                return {
+                    key: colKey,
+                    styleClass: col.style,
+                    value: value
+                };
+            });
+
+            return record;
+        });
+
+        return records;
     },
 
     render(){
-
-        let columnsKeys = [],
-            columnsNames = [],
-            rowsValues = [],
-            columnsStyle = Constants.dataTableColumns[this.props.option];
-
-        for(var key in columnsStyle){
-            if(columnsStyle.hasOwnProperty(key)){
-
-                columnsKeys.push(key);
-
-                let col = columnsStyle[key];
-
-                columnsNames.push(<th key={key} className={col.style}>{col.name}</th>);
-            }
-        }
-
-        columnsNames.push(<th key="actions" className="col-sm-2 text-center">Acciones</th>);
-
-        for(var key in this.props.data){
-            if(this.props.data.hasOwnProperty(key)){
-
-                let dataColumns = columnsKeys.map((columnKey) => {
-
-                    let value = (this.props.data[key])[columnKey];
-                    
-                    if(['created_date', 'date'].indexOf(columnKey) > -1){
-                        value = Dates.format(value,'DD/MM/YYYY');
-                    }
-
-                    let col = columnsStyle[columnKey];
-                    return <td key={columnKey} className={col.style}>{value}</td>;
-                }.bind(this));
-
-                dataColumns.push(<td key="actions" className="col-sm-2 text-center">
-                    <button className="btn btn-link" style={{padding:'0 5px'}}>
-                        <i className="fa fa-pencil fa-lg"></i>
-                    </button>
-                    <button className="btn btn-link" style={{padding:'0'}}>
-                        <i className="fa fa-trash-o fa-lg"></i>
-                    </button>
-                </td>);
-
-                rowsValues.push(
-                    <tr key={this.props.data[key].id} style={{cursor:'pointer'}} className="active">{dataColumns}</tr>);
-            }
-        }
 
         return(
             <table ref="dataTable" className="table table-condensed table-hover">
                 <thead>
                     <tr className="info">
-                        {columnsNames}
+                        {this.state.headerColumns.map((col) => 
+                            <th key={col.key} className={col.styleClass}>{col.value}</th>
+                        )}
                     </tr>
                 </thead>
                 <tbody>
-                    {rowsValues}
+                    {this.state.records.map((record) => 
+                        <tr key={record.id} style={{cursor:'pointer'}} className="active">
+                            { record.columns.map((col) => 
+                                <td key={col.key} className={col.styleClass}>{col.value}</td>
+                            )}
+                            <td key="actions" className="col-sm-2 text-center">
+                                <button className="btn btn-link" style={{padding:'0 5px'}}>
+                                    <i className="fa fa-pencil fa-lg"></i>
+                                </button>
+                                <button className="btn btn-link" style={{padding:'0'}}>
+                                    <i className="fa fa-trash-o fa-lg"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         );
