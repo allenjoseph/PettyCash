@@ -22,8 +22,6 @@ let ExpenseDispatcher = {
 
     add: (expense) => {
 
-        console.log(expense);
-        
         let success = (data) => {
             ExpenseStore.add(data)
         }

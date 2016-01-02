@@ -4,7 +4,7 @@ __pycache__/
 .DS_Store
 .idea/
 env/
-frontend-electron/dist/
+frontendElectron/dist/
 npm-debug.log
 
 */migrations/
