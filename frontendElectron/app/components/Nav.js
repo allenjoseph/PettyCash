@@ -3,6 +3,7 @@ import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from '
 import Constants from '../config/constants';
 import _ from 'lodash';
 import Cache from '../utils/cache';
+import Dropdown from './commons/Dropdown';
 
 export default React.createClass({
     getInitialState() {
