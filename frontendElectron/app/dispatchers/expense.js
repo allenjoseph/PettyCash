@@ -7,10 +7,10 @@ let ExpenseDispatcher = {
 
     getAll: () => {
 
-        let cardSelected = Cache.get('card_selected');
+        let cardSelected = Cache.get('card');
 
         let params = {
-            card: cardSelected.id
+            card: cardSelected
         };
         
         let success = (data) => {

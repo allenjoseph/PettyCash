@@ -99,7 +99,6 @@ export default React.createClass({
     },
 
     render(){
-
         return(
             <table ref="dataTable" className="table table-condensed table-hover">
                 <thead>

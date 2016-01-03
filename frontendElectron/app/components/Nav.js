@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar, Container, NavBarHeader, NavBarCollapse, NavBarContent } from './commons/Layout';
+import { NavBar, NavBarCollapse, NavBarContent } from './commons/NavBar';
 import Constants from '../config/constants';
 import _ from 'lodash';
 import Cache from '../utils/cache';
@@ -11,16 +11,21 @@ export default React.createClass({
             expenses: true
         };
     },
+
+    logout() {
+        Cache.clear();
+    },
+
     render() {
+
+        let data = {
+            menu: {icon: 'user', text: Cache.get('username')},
+            items: [{icon: 'sign-out', text: 'Logout', onClick: this.logout}]
+        };
 
         return(
             <NavBar>
-                <NavBarHeader>
-                    <i className="fa fa-book fa-fw"></i>
-                    <strong>Petty Cash</strong>
-                </NavBarHeader>
-
-                <NavBarCollapse>
+                <NavBarCollapse title="Petty Cash" icon="book">
                     <NavBarContent>
                         {(_.keys(Constants.titles)).map((optionKey)=>{
                             return (
@@ -34,21 +39,9 @@ export default React.createClass({
                     </NavBarContent>
 
                     <NavBarContent orientation="right">
-                        <li className="dropdown">
-                            <a className="dropdown-toggle text-uppercase" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
-                                <i className="fa fa-user fa-fw"></i>&nbsp;
-                                {Cache.get('user').username}&nbsp;
-                                <span className="caret"></span>
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li>
-                                    <a href="javascript:void(0)">
-                                        <i className="fa fa-sign-out fa-fw"></i> Logout
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <Dropdown data={data} />
                     </NavBarContent>
+
                 </NavBarCollapse>
             </NavBar>
         );

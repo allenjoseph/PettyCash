@@ -6,6 +6,7 @@ import Expenses from './expenses/Expenses';
 import update from 'react-addons-update';
 import Constants from '../config/constants';
 import Cache from '../utils/cache';
+import GeneralActions from '../actions/general';
 
 let Body = React.createClass({
 
@@ -14,6 +15,12 @@ let Body = React.createClass({
             option: '',
             title: ''
         };
+    },
+
+    componentWillMount() {
+        GeneralActions.verify();
+
+        this.loginSuccess();
     },
 
     loginSuccess() {

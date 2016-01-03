@@ -58,10 +58,21 @@ export default React.createClass({
                 <PageHeader>
                     <Row>
                         <h1>
-                            {this.props.title}&nbsp;&nbsp;&nbsp;
-                            <strong>{_.sum(_.pluck(this.state.data,'total_price'))}</strong>&nbsp;
-                            <small><i className="fa fa-money"></i></small>
-                            <a href="#" className="btn btn-success pull-right" onClick={this.openAddForm}>Agregar</a>
+                            <Row columns="3">
+                                <div className="col-md-3">
+                                    {this.props.title}
+                                </div>
+                                <div className="col-md-6">
+                                    <small>
+                                        <strong>{_.sum(_.pluck(this.state.data,'total_price'))}</strong>&nbsp;
+                                        <i className="fa fa-money"></i>
+                                    </small>
+                                </div>
+                                <div className="col-md-3">
+                                    <a href="#" className="btn btn-success pull-right" style={{marginTop: '1.5em'}}
+                                    onClick={this.openAddForm}>Agregar nuevo gasto</a>
+                                </div>
+                            </Row>
                         </h1>
                     </Row>
                 </PageHeader>

@@ -2,7 +2,16 @@ var store = {};
 
 export default {
 
-    get: (key) => store[key],
+    get: (key) => {
+        return window.localStorage.getItem(key);
+    },
     
-    set: (key, value) => store[key] = value
+    set: (key, value) => {
+        window.localStorage.setItem(key, value);
+    },
+
+    clear: () => {
+        window.localStorage.clear();
+        window.location.reload();
+    }
 };

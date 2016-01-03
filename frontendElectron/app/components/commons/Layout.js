@@ -42,62 +42,6 @@ export let Row = React.createClass({
    } 
 });
 
-export let NavBar = React.createClass({
-    render(){
-        
-        let styles = {
-            marginBottom: 0
-        };
-        
-        return (
-            <nav className="navbar navbar-default navbar-fixed-top" role="navigation" style={styles}>
-                <div className="container"> 
-                    {this.props.children}
-                </div>
-            </nav>
-        );
-    }
-});
-
-export let NavBarHeader = React.createClass({
-    render(){
-        return (
-            <div className="navbar-header">
-                <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span className="sr-only">Toggle navigation</span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                </button>
-                <a className="navbar-brand" href="javascript:void(0)">
-                    {this.props.children}
-                </a>
-            </div>
-        );
-    }
-});
-
-export let NavBarCollapse = React.createClass({
-    render(){
-        return (
-            <div className="navbar-collapse collapse">
-                {this.props.children}
-            </div>
-        );
-    }
-});
-
-export let NavBarContent = React.createClass({
-    render(){
-        let orientation = this.props.orientation ? 'navbar-' + this.props.orientation : '';
-        return (
-            <ul className={'nav navbar-nav ' + orientation}>
-                {this.props.children}
-            </ul>
-        );
-    }
-});
-
 export let Form = React.createClass({
    render(){
         if(this.props.orientation === 'vertical'){

@@ -2,6 +2,7 @@ let root = 'api';
 
 export let api = {
     auth: root + '/api-token-auth/',
+    verify: root + '/api-token-verify/',
     expenses: root + '/expenses/',
     legalPersons: root + '/legalpersons/',
     categories: root + '/categories/'
