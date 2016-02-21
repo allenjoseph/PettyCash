@@ -17,8 +17,7 @@ export default {
         ruc: 'ruc'
     },
     titles:{
-        expenses: 'Gastos',
-        stadistics: 'Estadisticas'
+        expenses: 'Gastos'
     },
     dataTableLangEs : {
         'sProcessing': 'Procesando...',
