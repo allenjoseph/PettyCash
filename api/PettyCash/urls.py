@@ -21,6 +21,7 @@ from apps.expenses.views.expense import ExpenseViewSet
 from apps.expenses.views.expense import CategoryViewSet
 from apps.expenses.views.installment import CardViewSet
 from apps.expenses.views.installment import InstallmentViewSet
+from django.views.generic import TemplateView
 
 router = routers.SimpleRouter()
 router.register(r'legalpersons', LegalPersonViewSet)
@@ -34,4 +35,5 @@ urlpatterns = [
     url(r'^api/api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^api/api-token-verify/', 'rest_framework_jwt.views.verify_jwt_token'),
     url(r'^api/', include(router.urls)),
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
 ]
