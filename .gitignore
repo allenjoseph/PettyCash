@@ -12,3 +12,5 @@ npm-debug.log
 *.db
 */node_modules/
 */bower_components/
+api/static
+logs/

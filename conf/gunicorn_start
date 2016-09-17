@@ -1,0 +1,29 @@
+#!/bin/bash
+NAME="pettycash"                                      # Name of the application
+DJANGODIR=/home/ec2-user/PettyCash/api                # Django project directory
+SOCKFILE=/home/ec2-user/PettyCash/run/gunicorn.sock   # we will communicte using this unix socket
+USER=ec2-user   # the user to run as
+GROUP=ec2-user  # the group to run as
+NUM_WORKERS=3   # how many worker processes should Gunicorn spawn
+DJANGO_SETTINGS_MODULE=PettyCash.settings # which settings file should Django use
+DJANGO_WSGI_MODULE=PettyCash.wsgi         # WSGI module name
+
+# Activate the virtual environment
+echo "Starting $NAME as `whoami`"
+cd $DJANGODIR
+source ../env/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Start your Django Unicorn
+exec ../env/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --bind=unix:$SOCKFILE \
+  --log-level=debug \
+  --log-file=-

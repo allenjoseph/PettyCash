@@ -1,4 +1,4 @@
-let root = 'api';
+let root = 'http://pettycash.allenjoseph.pe/api';
 
 export let api = {
     auth: root + '/api-token-auth/',

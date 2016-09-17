@@ -23,10 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1pfd3xz40_ax)dltmm&5j-qq@1$#4w7ki)4-ww1mssh=d7z&u6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = False
 
+# TEMPLATE_DEBUG = True
+
+ALLOWED_HOSTS = ["pettycash.allenjoseph.pe"]
 
 # Application definition
 
@@ -56,10 +58,12 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'PettyCash.urls'
 
+FRONTEND_DIR = '/home/ec2-user/PettyCash/frontendElectron'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [FRONTEND_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +109,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -121,3 +124,5 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'apps.expenses.handlers.jwt_response_payload_handler',
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
